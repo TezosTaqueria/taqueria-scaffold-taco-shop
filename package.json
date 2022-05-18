@@ -1,0 +1,19 @@
+{
+  "name": "testme",
+  "version": "1.0.0",
+  "description": "## Overview",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@taqueria/plugin-ligo": "^0.3.1",
+    "@taqueria/plugin-taquito": "^0.3.1"
+  }
+}
