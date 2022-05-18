@@ -1,10 +1,11 @@
 # Taco Shop Scaffold
 
-|------------------|-------------------------|
-| complexity       | beginner                |
-| frontend dApp    | yes                     |
-| automated tests  | yes                     |
-| plugins          | LIGO, Taquito, Flextesa |
+| Scaffold Property | Description             |
+|-------------------|-------------------------|
+| complexity        | beginner                |
+| frontend dApp     | yes                     |
+| automated tests   | yes                     |
+| plugins           | LIGO, Taquito, Flextesa |
 
 ## Quickstart
 
