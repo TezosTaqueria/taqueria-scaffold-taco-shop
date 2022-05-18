@@ -93,10 +93,9 @@ The React dApp retrieves the number of available tacos from the smart contract a
 <img src={useBaseUrl('/img/hello-tacos-screenshot.png')} />
 ![Image of Taco Shop Frontend](/img/hello-tacos-screenshot.png)
 
-:::note
-In order for the React dA to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/dA/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
+> In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/dA/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
 
-This will be fixed in the future when contract addresses will be passed via the State API dynamically
+> This will be fixed in the future when contract addresses will be passed via the State API dynamically
 :::
 
 ## Requirements
