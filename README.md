@@ -1,6 +1,5 @@
 # Taco Shop Scaffold
 
-|                  |                         |
 |------------------|-------------------------|
 | complexity       | beginner                |
 | frontend dApp    | yes                     |
@@ -9,12 +8,21 @@
 
 ## Quickstart
 
-Run the following commands to get up and running immediatley:
+Run the following commands to get up and running immediatley with this scaffold
+
+Clone and initialize the scaffold:
 
 - `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
 - `cd taco-shop`
 - `taq init`
 - `npm install`
+
+Build and Start the dApp:
+
+- `cd app`
+- `npm install`
+- `npm run build`
+- `npm run start`
 
 ## Overview
 
