@@ -31,7 +31,7 @@ This scaffold implements a simple full stack Tezos project. It has a simple Reac
 
 The React dApp uses Beacon Wallet to interact with Tezos wallets in the browser and once connected, will display the number of available_tacos stored on-chain in the smart contract. There is also a basic interface which allows the user to buy tacos by sending a transaction to the smart contract with the number_of_tacos_to_buy as a parameter
 
-The smart contract has been deployed to ithacanet at the address for demonstration purposes: `KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE`
+The smart contract has been deployed to ithacanet at this address for demonstration purposes: `KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE`
 
 The project comes pre-configured with the following:
 
@@ -63,7 +63,7 @@ The project comes pre-configured with the following:
 ## Project Structure
 
 - `/.taq` - This hidden folder stores the project configuration and State
-- `/dA` - This is the React dA
+- `/app` - This folder contains the React dApp
 - `/contracts` - This folder contains the LIGO smart contracts
 - `/tests` - This folder contains the tests
 - `/artifacts` - This folder contains the compiled Michelson `.tz` contracts
@@ -81,15 +81,17 @@ let main (tacos_to_buy, available_tacos: tacos_to_buy * available_tacos): operat
     then (failwith "NOT_ENOUGH_TACOS": operation list * available_tacos)
     else ([]: operation list), abs(available_tacos - tacos_to_buy)
 ```
+
 ### Testing
 
-**Coming soon with the Taqueria Jest plugin**
+Coming soon with the Taqueria Jest plugin!
 
-### React dA
+### React dApp
 
 The React dApp retrieves the number of available tacos from the smart contract and displays the value. It provides an interface for the user to buy tacos and looks like this:
 
 <img src={useBaseUrl('/img/hello-tacos-screenshot.png')} />
+![Image of Taco Shop Frontend](/img/hello-tacos-screenshot.png)
 
 :::note
 In order for the React dA to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/dA/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
