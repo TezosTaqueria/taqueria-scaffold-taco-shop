@@ -1,41 +1,37 @@
-# Taco Shop Scaffold
+# Taco Shop
 
-| Scaffold Property | Description             |
-|-------------------|-------------------------|
-| complexity        | beginner                |
-| frontend dApp     | yes                     |
-| automated tests   | yes                     |
-| plugins           | LIGO, Taquito, Flextesa |
+| Scaffold Details                             |
+|--------------------|-------------------------|
+| Complexity         | Beginner                |
+| Automated Tests    | Yes                     |
+| Installed Plugins  | LIGO, Taquito, Flextesa |
+| Frontend Dapp      | Yes                     |
+| Wallet Integration | Yes                     |
 
 ## Quickstart
 
-Run the following commands to get up and running immediatley with this scaffold
+In a rush? You can follow the steps below to get up and running immediatley:
 
-Clone and initialize the scaffold:
 
-- `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
-- `cd taco-shop`
-- `taq init`
-- `npm install`
-
-Build and Start the dApp:
-
-- `cd app`
-- `npm install`
-- `npm run build`
-- `npm run start`
+1. `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
+2. `cd taco-shop`
+3. `npm install`
+4. `cd taco-shop`
+5. `npm install`
+6. `npm run build`
+6. `npm run start`
 
 ## Overview
 
-This scaffold implements a simple full stack Tezos project. It has a simple React dApp that interacts with a smart contract which stores the number of available_tacos and provides a function to buy tacos
+This scaffold implements a simple full stack Tezos project. It has a React dApp that interacts with a smart contract which stores the number of available_tacos and provides a function to buy tacos
 
-The React dApp uses Beacon Wallet to interact with Tezos wallets in the browser and once connected, will display the number of available_tacos stored on-chain in the smart contract. There is also a basic interface which allows the user to buy tacos by sending a transaction to the smart contract with the number_of_tacos_to_buy as a parameter
+The React dApp uses Beacon Wallet to interact with Tezos wallets in the browser and once connected, will display the number of `available_tacos` stored on-chain in the smart contract. There is also a basic interface which allows the user to buy tacos by sending a transaction to the smart contract with the `number_of_tacos_to_buy` as a parameter
 
-The smart contract has been deployed to ithacanet at this address for demonstration purposes: `KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE`
+The smart contract has been deployed to ithacanet at the address for demonstration purposes: `KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE`
 
 The project comes pre-configured with the following:
 
-- Plugins: LIGO, Flextesa, Taquito 
+- Plugins: LIGO, Flextesa, Taquito
 - A LIGO smart contract `hello-tacos.mligo`  
 - A network configuration for the Ithaca testnet
 - A faucet file to fund operations on the testnet
@@ -44,7 +40,7 @@ The project comes pre-configured with the following:
 ***Coming soon***
 
 - Native Taqueria testing (Taqueria Jest plugin)
-- Passing the deployed contract address to the React dA via the State API
+- Passing the deployed contract address to the React dApp via the State API
 - Deploying the contract using Taqueria operations
 - Targeting a specific network for contract deployment and testing (sandboxes and testnets)
 - Deploying the contract to mainnet
@@ -56,16 +52,16 @@ The project comes pre-configured with the following:
 - Node.js v16 or later
 - Beacon or Kukai Wallet
 - A funded testnet account
-- A [faucet file](https://teztnets.xyz)   
+- A [faucet file](https://teztnets.xyz)
 
 ## Project Overview
 
-## Project Structure
+### Project Structure
 
-- `/.taq` - This hidden folder stores the project configuration and State
-- `/app` - This folder contains the React dApp
+- `/.taq` - This hidden folder stores the Taqueria configuration and state
+- `/app` - This is the React dApp 
 - `/contracts` - This folder contains the LIGO smart contracts
-- `/tests` - This folder contains the tests
+- `/tests` - This folder contains the automated tests
 - `/artifacts` - This folder contains the compiled Michelson `.tz` contracts
 
 ### Smart Contract
@@ -84,26 +80,17 @@ let main (tacos_to_buy, available_tacos: tacos_to_buy * available_tacos): operat
 
 ### Testing
 
-Coming soon with the Taqueria Jest plugin!
+**Coming soon with the Taqueria Jest plugin**
 
-### React dApp
+### React Dapp
 
 The React dApp retrieves the number of available tacos from the smart contract and displays the value. It provides an interface for the user to buy tacos and looks like this:
 
-<img src={useBaseUrl('/img/hello-tacos-screenshot.png')} />
-![Image of Taco Shop Frontend](/img/hello-tacos-screenshot.png)
+![Hello Tacos Screenshot](/img/hello-tacos-screenshot.png)
 
-> In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/dA/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
+> In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/app/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
 
 > This will be fixed in the future when contract addresses will be passed via the State API dynamically
-:::
-
-## Requirements
-
-- Node.js v16.x (or later)
-- Docker v 0.8.0 (or later)
-- Taqueria v0.3.1 (or later)
-- Temple Wallet (latest version)
 
 ## Scaffold the Project
 
@@ -113,7 +100,7 @@ This project is available as a Taqueria scaffold. To create a new project from t
 taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop
 ```
 
-This will clone the Taco Shop scaffold project into the `taco-shop` directory
+This will clone the Taco Shop scaffold project into a directory called `taco-shop`
 
 ## Project Setup
 
@@ -141,8 +128,8 @@ The intended workflow for this project is as follows:
 
 1. Compile the LIGO source code
 2. Originate the smart contract to the testnet
-3. Insert the returned contract address into the React dA
-4. Build and start the React dA
+3. Insert the returned contract address into the React dApp
+4. Build and start the React dApp
 5. Connect to Temple wallet
 6. Buy tacos!
 
@@ -163,6 +150,7 @@ taq originate -e ithacanet
 ```
 
 This should return the address of the contract on the testnet which looks like this:
+
 ```shell
 ┌────────────────┬──────────────────────────────────────┬────────────────┐
 │ Contract       │ Address                              │ Destination    │
@@ -171,17 +159,15 @@ This should return the address of the contract on the testnet which looks like t
 └────────────────┴──────────────────────────────────────┴────────────────┘
 ```
 
-:::caution
-This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](/src/docs/getting-started/networks)
+> This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](/docs/getting-started/networks)
 :::
-
 
 ### Insert the Contract Address
 
-Now that the contract has been deployed, you need to insert the address of the contract into the `/dA/index.tsx` file. Copy the address returned from the command above and paste it into the `contractAddress` variable in the `/dA/index.tsx` file as shown here:
+Now that the contract has been deployed, you need to insert the address of the contract into the `/app/index.tsx` file. Copy the address returned from the command above and paste it into the `contractAddress` variable in the `/app/index.tsx` file as shown here:
 
-```ts /dA/src/dA.tsx
-function dA() {
+```ts /app/src/app.tsx
+function app() {
   const [rpcUrl, setRpcUrl] = useState("https://ithacanet.ecadinfra.com");
   const [contractAddress, setContractAddress] = useState(
     "KT1EHAXNQ1oeh2ZNTkvvcU6PfzQvGPLsgJx3"
@@ -193,14 +179,14 @@ function dA() {
   const [connected, setConnected] = useState(false);
 ```
 
-### Build and Start the React dA
+### Build and Start the React Dapp
 
-Now that the contract has been deployed and the address added to the dA, you can build and start the React dA
+Now that the contract has been deployed and the address added to the dApp, you can build and start the React dApp
 
-Change into the `/dA` directory:
+Change into the `/app` directory:
 
 ```shell
-cd dA
+cd app
 ```
 
 Install dependencies:
@@ -209,23 +195,23 @@ Install dependencies:
 npm install
 ```
 
-Build the React dA:
+Build the React dApp:
 
 ```shell
 npm run build
 ```
 
-Start and serve the dA:
+Start and serve the dApp:
 
 ```shell 
 npm run start
 ```
 
-You should now be able to access the Taco shop dApp at `http://localhost:3000/`
+You should now be able to access the Taco Shop dApp at [http://localhost:3000](http://localhost:3000/)
 
 ### Connect to Temple Wallet
 
-Open a browser and navigate to `http://localhost:3000/`
+Open a browser and navigate to [http://localhost:3000](http://localhost:3000/)
 
 You should see the number of `available_tacos` displayed
 
@@ -239,4 +225,4 @@ With your wallet connected, you can now interact with the contract entrypoint
 
 Click the `order` button and then authorize the transaction in Temple Wallet
 
-Once completed, you will see the value of `available_tacos` decrease in the dApp by the number of tacos you order
+Once completed, you will see the value of `available_tacos` decrease by the number of tacos you ordered
