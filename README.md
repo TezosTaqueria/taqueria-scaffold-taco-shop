@@ -12,7 +12,6 @@
 
 In a rush? You can follow the steps below to get up and running immediatley:
 
-
 1. `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
 2. `cd taco-shop`
 3. `npm install`
