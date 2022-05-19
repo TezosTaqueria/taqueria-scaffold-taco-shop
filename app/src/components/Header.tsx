@@ -18,7 +18,7 @@ const Header = ({
         <img src="images/logo.png" alt="logo" />
       </div>
       <div className="header__title">
-        <h1>Hello Tacos</h1>
+        <h1>Taco Shop</h1>
       </div>
       <div className="header__connection-status">
         <Wallet
