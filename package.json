@@ -1,18 +1,26 @@
 {
-  "name": "testme",
-  "version": "1.0.0",
-  "description": "## Overview",
-  "main": "index.js",
+  "name": "taqueria-scaffold-taco-shop",
+  "version": "1.1.1",
+  "description": "A full stack Taqueria dApp that developers can use as a starting point for building their own Tezos dApps",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecadlabs/taqueria-scaffold-taco-shop.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop/issues"
+  },
+  "homepage": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop#readme",
   "devDependencies": {
+    "@taqueria/plugin-flextesa": "^0.3.1",
     "@taqueria/plugin-ligo": "^0.3.1",
     "@taqueria/plugin-taquito": "^0.3.1"
   }
