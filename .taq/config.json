@@ -1,0 +1,134 @@
+{
+    "language": "en",
+    "plugins": [
+        {
+            "name": "@taqueria/plugin-flextesa",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-ligo",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-taquito",
+            "type": "npm"
+        }
+    ],
+    "contractsDir": "contracts",
+    "testsDir": "tests",
+    "artifactsDir": "artifacts",
+    "environment": {
+        "default": "development",
+        "development": {
+            "networks": [],
+            "sandboxes": [
+                "local"
+            ],
+            "storage": {
+                "hello-tacos.tz": 1111
+            }
+        },
+        "ithacanet": {
+            "networks": [
+                "ithaca_network"
+            ],
+            "sandboxes": [],
+            "storage": {
+                "hello-tacos.tz": 1111
+        },
+        "jakartanet": {
+            "networks": [
+                "jakarta_network"
+            ],
+            "sandboxes": [],
+            "storage": {
+                "hello-tacos.tz": 1111
+            }
+        }
+    },
+    "sandbox": {
+        "local": {
+            "accounts": {
+                "default": "bob",
+                "bob": {
+                    "initialBalance": "3000000000"
+                },
+                "alice": {
+                    "initialBalance": "2000000000"
+                },
+                "john": {
+                    "initialBalance": "4000000000"
+                },
+                "jane": {
+                    "initialBalance": "5000000000"
+                },
+                "joe": {
+                    "initialBalance": "1000000000"
+                }
+            },
+            "label": "Local Tezos Sandbox",
+            "protocol": "Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A",
+            "rpcUrl": "http://localhost:20000"
+        }
+    },
+    "network": {
+        "ithaca_network": {
+            "label": "Ithaca Protocol Testnet",
+            "rpcUrl": "https://ithacanet.ecadinfra.com",
+            "protocol": "Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A",
+            "faucet": {
+                "pkh": "tz1WwDS6suQr5muzcsdQX9vRBE7FKQH2TroQ",
+                "mnemonic": [
+                    "violin",
+                    "expect",
+                    "hawk",
+                    "lizard",
+                    "impose",
+                    "siren",
+                    "enact",
+                    "picture",
+                    "feature",
+                    "tired",
+                    "limit",
+                    "glad",
+                    "pattern",
+                    "rural",
+                    "genius"
+                ],
+                "email": "fenuwvne.nzqxhviy@teztnets.xyz",
+                "password": "mg7cpefGhH",
+                "amount": "298125932878",
+                "activation_code": "bd8b66eeb39000fe8bddb76ed0e3cafd94712aaa"
+            }
+        },
+        "jakarta_network": {
+            "label": "Jakarta Protocol Testnet",
+            "rpcUrl": "https://rpc.jakartanet.teztnets.xyz",
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "faucet": {
+                "pkh": "tz1SUXByWdXHKLb6M2rqVpLYteuvCwrkdsvY",
+                "mnemonic": [
+                    "apart",
+                    "squeeze",
+                    "laptop",
+                    "become",
+                    "eternal",
+                    "wage",
+                    "wreck",
+                    "youth",
+                    "rough",
+                    "fetch",
+                    "trial",
+                    "general",
+                    "taste",
+                    "cactus",
+                    "input"
+                ],
+                "email": "xaycebes.jlcpaiyz@teztnets.xyz",
+                "password": "zopzJVqbGF",
+                "amount": "29091772142",
+                "activation_code": "ea29da703d38f4ea04f6105b5954b3150e7d20f2"
+            }
+        }
+    }
+}
