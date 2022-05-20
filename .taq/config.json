@@ -35,6 +35,7 @@
             "sandboxes": [],
             "storage": {
                 "hello-tacos.tz": 1111
+            }
         },
         "jakartanet": {
             "networks": [
