@@ -17,62 +17,33 @@
     "contractsDir": "contracts",
     "artifactsDir": "artifacts",
     "network": {
-        "ithaca_network": {
-            "label": "Ithaca Protocol Testnet",
-            "rpcUrl": "https://ithacanet.ecadinfra.com",
-            "protocol": "Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A",
-            "faucet": {
-                "pkh": "tz1WwDS6suQr5muzcsdQX9vRBE7FKQH2TroQ",
-                "mnemonic": [
-                    "violin",
-                    "expect",
-                    "hawk",
-                    "lizard",
-                    "impose",
-                    "siren",
-                    "enact",
-                    "picture",
-                    "feature",
-                    "tired",
-                    "limit",
-                    "glad",
-                    "pattern",
-                    "rural",
-                    "genius"
-                ],
-                "email": "fenuwvne.nzqxhviy@teztnets.xyz",
-                "password": "mg7cpefGhH",
-                "amount": "298125932878",
-                "activation_code": "bd8b66eeb39000fe8bddb76ed0e3cafd94712aaa"
-            }
-        },
-        "jakarta_network": {
-            "label": "Jakarta Protocol Testnet",
-            "rpcUrl": "https://rpc.jakartanet.teztnets.xyz",
+        "ghostnet": {
+            "label": "Ghostnet Testnet",
+            "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
             "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
             "faucet": {
-                "pkh": "tz1SUXByWdXHKLb6M2rqVpLYteuvCwrkdsvY",
+                "pkh": "tz1SkFaEFov3xsifrFHfVuSgXLvjD3rCRaQb",
                 "mnemonic": [
-                    "apart",
-                    "squeeze",
-                    "laptop",
-                    "become",
-                    "eternal",
-                    "wage",
-                    "wreck",
-                    "youth",
-                    "rough",
-                    "fetch",
-                    "trial",
-                    "general",
-                    "taste",
-                    "cactus",
-                    "input"
+                    "delay",
+                    "ritual",
+                    "treat",
+                    "empty",
+                    "jacket",
+                    "believe",
+                    "lucky",
+                    "note",
+                    "uncover",
+                    "child",
+                    "warfare",
+                    "payment",
+                    "session",
+                    "imitate",
+                    "when"
                 ],
-                "email": "xaycebes.jlcpaiyz@teztnets.xyz",
-                "password": "zopzJVqbGF",
-                "amount": "29091772142",
-                "activation_code": "ea29da703d38f4ea04f6105b5954b3150e7d20f2"
+                "email": "qyfwdnnq.pegsrakz@teztnets.xyz",
+                "password": "Pz7SKUfNVm",
+                "amount": "9689377231",
+                "activation_code": "c748b85bb936f728784c5934da5523947aad0dbd"
             }
         }
     },
@@ -84,25 +55,16 @@
                 "local"
             ],
             "storage": {
-                "hello-tacos.tz": 1111
+                "hello-tacos.tz": 42
             }
         },
-        "ithacanet": {
+        "testing": {
             "networks": [
-                "ithaca_network"
+                "ghostnet"
             ],
             "sandboxes": [],
             "storage": {
-                "hello-tacos.tz": 1111
-            }
-        },
-        "jakartanet": {
-            "networks": [
-                "jakarta_network"
-            ],
-            "sandboxes": [],
-            "storage": {
-                "hello-tacos.tz": 1111
+                "hello-tacos.tz": 42
             }
         }
     },
@@ -117,38 +79,7 @@
         "local": {
             "label": "Local Tezos Sandbox",
             "rpcUrl": "http://localhost:20000",
-            "protocol": "Psithaca2MLRFYargivpo7YvUr7wUDqyxrdhC5CQq78mRvimz6A",
-            "accounts": {
-                "bob": {
-                    "encryptedKey": "edpkurPsQ8eUApnLUJ9ZPDvu98E8VNj4KtJa1aZr16Cr5ow5VHKnz4",
-                    "publicKeyHash": "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6",
-                    "secretKey": "unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt",
-                    "alias": "bob"
-                },
-                "alice": {
-                    "encryptedKey": "edpkvGfYw3LyB1UcCahKQk4rF2tvbMUk8GFiTuMjL75uGXrpvKXhjn",
-                    "publicKeyHash": "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb",
-                    "secretKey": "unencrypted:edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq",
-                    "alias": "alice"
-                },
-                "john": {
-                    "encryptedKey": "edpktt6t2ENhxiQqun6bXPPWC6tFVvNPTDRh1gEPGX4BgDgbDnmGzP",
-                    "publicKeyHash": "tz1Zwoh1QCVAvJ4sVTojMp9pLYp6Ji4NoZy6",
-                    "secretKey": "unencrypted:edsk3Un2KRUUoWZufi914HQem96ejVFnkyD8GXRPUSkgqy5etsYXEN",
-                    "alias": "john"
-                },
-                "jane": {
-                    "encryptedKey": "edpkvS6TDSWcqqj3EJi3NRrCMyN7oNw1B3Hp37R19tMThqM8YNhAuS",
-                    "publicKeyHash": "tz1aHUAC4oviwJuZF1EvVSvFz7cu9KMNYBph",
-                    "secretKey": "unencrypted:edsk3UkdS1UBfTBkMAoFxmfdmUHmCdNhTzDJ1cSJuZhU1b6k6fZZoQ",
-                    "alias": "jane"
-                },
-                "joe": {
-                    "encryptedKey": "edpkuT1QYPYbLLQz9dXhQS33ncsixxeGHbNGmntPTR4VBbWmskHPrV",
-                    "publicKeyHash": "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB",
-                    "secretKey": "unencrypted:edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2",
-                    "alias": "joe"
-                }
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY"
             }
         }
     }
