@@ -11,7 +11,7 @@ const Footer = ({ contractAddress }: { contractAddress: string }) => (
     </div>
     <div>
       <a
-        href={`https://better-call.dev/ithacanet/${contractAddress}/operations`}
+        href={`https://better-call.dev/ghostnet/${contractAddress}/operations`}
         target="_blank"
         rel="noopener noreferrer nofollow"
       >
