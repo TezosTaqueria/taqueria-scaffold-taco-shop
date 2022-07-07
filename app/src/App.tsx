@@ -11,9 +11,12 @@ import "./styles/Footer.css";
 import "./styles/Wallet.css";
 
 function App() {
-  const [rpcUrl, setRpcUrl] = useState("https://ithacanet.ecadinfra.com");
+
+  // Retrieve the most recent address of the deployed contract
+
+  const [rpcUrl, setRpcUrl] = useState("https://rpc.ghostnet.teztnets.xyz");
   const [contractAddress, setContractAddress] = useState(
-    "KT1EHAXNQ1oeh2ZNTkvvcU6PfzQvGPLsgJx3"
+    "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
   );
   const [contractStorage, setContractStorage] = useState<number | undefined>(
     undefined
