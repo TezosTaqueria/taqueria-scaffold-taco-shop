@@ -20,8 +20,8 @@ const Wallet = ({
   const createWallet = (): BeaconWallet => {
     const walletOptions = {
       name: "Hello Tacos",
-      preferredNetwork: NetworkType.ITHACANET
-    };
+      preferredNetwork: NetworkType.JAKARTANET
+    }
     return new BeaconWallet(walletOptions);
   };
 
@@ -33,7 +33,7 @@ const Wallet = ({
       try {
         await w.requestPermissions({
           network: {
-            type: NetworkType.ITHACANET,
+            type: NetworkType.JAKARTANET,
             rpcUrl
           }
         });
