@@ -129,3 +129,5 @@ dist
 .pnp.*
 .DS_Store
 .taq/development-state.json
+.taq/ghostnet-state.json
+.taq/testing-state.json
