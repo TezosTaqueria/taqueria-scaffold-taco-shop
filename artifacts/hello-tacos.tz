@@ -1,12 +1,8 @@
 { parameter nat ;
   storage nat ;
   code { UNPAIR ;
-         SWAP ;
-         DUP ;
-         DUG 2 ;
-         SWAP ;
-         DUP ;
-         DUG 2 ;
+         DUP 2 ;
+         DUP 2 ;
          COMPARE ;
          GT ;
          IF { DROP 2 ; PUSH string "NOT_ENOUGH_TACOS" ; FAILWITH }
