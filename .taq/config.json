@@ -1,81 +1,89 @@
 {
-  "language": "en",
-  "plugins": [
-    {
-      "name": "@taqueria/plugin-flextesa",
-      "type": "npm"
+    "language": "en",
+    "plugins": [
+        {
+            "name": "@taqueria/plugin-flextesa",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-ligo",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-taquito",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-jest",
+            "type": "npm"
+        }
+    ],
+    "contractsDir": "contracts",
+    "artifactsDir": "artifacts",
+    "network": {
+        "ghostnet": {
+            "label": "Ghostnet Testnet",
+            "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "faucet": {
+                "pkh": "tz1SkFaEFov3xsifrFHfVuSgXLvjD3rCRaQb",
+                "mnemonic": [
+                    "delay",
+                    "ritual",
+                    "treat",
+                    "empty",
+                    "jacket",
+                    "believe",
+                    "lucky",
+                    "note",
+                    "uncover",
+                    "child",
+                    "warfare",
+                    "payment",
+                    "session",
+                    "imitate",
+                    "when"
+                ],
+                "email": "qyfwdnnq.pegsrakz@teztnets.xyz",
+                "password": "Pz7SKUfNVm",
+                "amount": "9689377231",
+                "activation_code": "c748b85bb936f728784c5934da5523947aad0dbd"
+            }
+        }
     },
-    {
-      "name": "@taqueria/plugin-ligo",
-      "type": "npm"
+    "sandbox": {
+        "local": {
+            "label": "Local Tezos Sandbox",
+            "rpcUrl": "http://localhost:20000",
+            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY"
+        }
     },
-    {
-      "name": "@taqueria/plugin-taquito",
-      "type": "npm"
-    }
-  ],
-  "contractsDir": "contracts",
-  "artifactsDir": "artifacts",
-  "network": {
-    "ghostnet": {
-      "label": "Ghostnet Testnet",
-      "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
-      "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
-      "faucet": {
-        "pkh": "tz1SkFaEFov3xsifrFHfVuSgXLvjD3rCRaQb",
-        "mnemonic": [
-          "delay",
-          "ritual",
-          "treat",
-          "empty",
-          "jacket",
-          "believe",
-          "lucky",
-          "note",
-          "uncover",
-          "child",
-          "warfare",
-          "payment",
-          "session",
-          "imitate",
-          "when"
-        ],
-        "email": "qyfwdnnq.pegsrakz@teztnets.xyz",
-        "password": "Pz7SKUfNVm",
-        "amount": "9689377231",
-        "activation_code": "c748b85bb936f728784c5934da5523947aad0dbd"
-      }
-    }
-  },
-  "environment": {
-    "default": "development",
-    "development": {
-      "networks": [],
-      "sandboxes": ["local"],
-      "storage": {
-        "hello-tacos.tz": 42
-      }
+    "environment": {
+        "default": "development",
+        "development": {
+            "networks": [],
+            "sandboxes": [
+                "local"
+            ],
+            "storage": {
+                "hello-tacos.tz": 42
+            }
+        },
+        "testing": {
+            "networks": [
+                "ghostnet"
+            ],
+            "sandboxes": [],
+            "storage": {
+                "hello-tacos.tz": 42
+            }
+        }
     },
-    "testing": {
-      "networks": ["ghostnet"],
-      "sandboxes": [],
-      "storage": {
-        "hello-tacos.tz": 42
-      }
+    "accounts": {
+        "bob": "3_000_000_000",
+        "alice": "3_000_000_000",
+        "john": "3_000_000_000",
+        "jane": "3_000_000_000",
+        "joe": "3_000_000_000"
     }
-  },
-  "accounts": {
-    "bob": "3_000_000_000",
-    "alice": "3_000_000_000",
-    "john": "3_000_000_000",
-    "jane": "3_000_000_000",
-    "joe": "3_000_000_000"
-  },
-  "sandbox": {
-    "local": {
-      "label": "Local Tezos Sandbox",
-      "rpcUrl": "http://localhost:20000",
-      "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY"
-    }
-  }
 }
