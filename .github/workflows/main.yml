@@ -1,0 +1,32 @@
+on: [push]
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  taco-shop-compile-and-originate:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Setup repo
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: install modules
+        run: |
+          cd example-projects/hello-tacos
+          npm update
+          npm ci
+
+      - name: Taqueria compile and originate
+        uses: ecadlabs/taqueria-github-action@v0.1.1
+        with:
+          compile_command: 'compile'
+          sandbox_name: 'local'
+          originate: True
+          tests: True
