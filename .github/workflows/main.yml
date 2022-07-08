@@ -25,6 +25,7 @@ jobs:
       - name: Taqueria compile and originate
         uses: ecadlabs/taqueria-github-action@v0.1.1
         with:
+          plugins: '@taqueria/plugin-jest'
           compile_command: 'compile'
           sandbox_name: 'local'
           originate: True
