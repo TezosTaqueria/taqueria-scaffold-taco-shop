@@ -1,35 +1,32 @@
 const { TezosToolkit } = require("@taquito/taquito");
 const { InMemorySigner } = require("@taquito/signer");
-const contractCode = require("../contract/contract.json");
+const config = require('../.taq/config.json')
 
 describe("JavaScript tests for Hello Tacos contract", () => {
   let Tezos;
   let signer;
   let helloTacosAddress;
-  const alice = {
-    sk: "edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq",
-    pk: "tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb"
-  };
-  const bob = {
-    sk: "edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt",
-    pk: "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6"
-  };
-  const rpcUrl = "http://localhost:20000";
+  const {alice} = config.sandbox.local.accounts
+  const {bob} = config.sandbox.local.accounts
+  const {rpcUrl} = config.sandbox.local
   const originalNrOfTacos = 100;
 
   jest.setTimeout(50000);
 
   beforeAll(async () => {
     Tezos = new TezosToolkit(rpcUrl);
-    signer = new InMemorySigner(alice.sk);
+    signer = new InMemorySigner(alice.keys.secretKey.replace(/unencrypted:/, ''));
     Tezos.setSignerProvider(signer);
-    const op = await Tezos.contract.transfer({ to: bob.pk, amount: 1 });
+    const op = await Tezos.contract.transfer({ to: bob.keys.publicKey, amount: 1 });
     await op.confirmation();
   });
 
   test("Should originate the Hello Tacos contract", async () => {
+    const {readFile} = require('fs/promises')
+    const {join} = require('path')
+    const contractFile = join(config.artifactsDir, 'hello-tacos.tz')
     const originationOp = await Tezos.contract.originate({
-      code: contractCode,
+      code: await readFile(contractFile, {encoding:'utf8'}),
       storage: originalNrOfTacos
     });
     await originationOp.confirmation();
