@@ -19,7 +19,6 @@ jobs:
 
       - name: install modules
         run: |
-          cd example-projects/hello-tacos
           npm update
           npm ci
 
