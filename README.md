@@ -1,12 +1,12 @@
 # Taco Shop
 
-| Scaffold Details   |                         |
-|--------------------|-------------------------|
-| Complexity         | Beginner                |
-| Automated Tests    | Yes                     |
-| Installed Plugins  | LIGO, Taquito, Flextesa |
-| Frontend Dapp      | Yes                     |
-| Wallet Integration | Yes                     |
+| Scaffold Details   |                               |
+|--------------------|-------------------------------|
+| Complexity         | Beginner                      |
+| Automated Tests    | Yes                           |
+| Installed Plugins  | LIGO, Taquito, Flextesa, Jest |
+| Frontend Dapp      | Yes                           |
+| Wallet Integration | Yes                           |
 
 ## Quickstart
 
