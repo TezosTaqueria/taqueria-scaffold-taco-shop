@@ -6,8 +6,8 @@ describe("JavaScript tests for Hello Tacos contract", () => {
   let Tezos;
   let signer;
   let helloTacosAddress;
-  const {alice} = config.sandbox.local.accounts
-  const {bob} = config.sandbox.local.accounts
+  const {alice} = config.accounts.alice
+  const {bob} = config.accounts.bob
   const {rpcUrl} = config.sandbox.local
   const originalNrOfTacos = 100;
 
@@ -15,9 +15,9 @@ describe("JavaScript tests for Hello Tacos contract", () => {
 
   beforeAll(async () => {
     Tezos = new TezosToolkit(rpcUrl);
-    signer = new InMemorySigner(alice.keys.secretKey.replace(/unencrypted:/, ''));
+    signer = new InMemorySigner(config.sandbox.local.accounts.alice.secretKey.replace(/unencrypted:/, ''));
     Tezos.setSignerProvider(signer);
-    const op = await Tezos.contract.transfer({ to: bob.keys.publicKey, amount: 1 });
+    const op = await Tezos.contract.transfer({ to: config.sandbox.local.accounts.bob.publicKeyHash, amount: 1 });
     await op.confirmation();
   });
 
