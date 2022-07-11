@@ -23,7 +23,7 @@ jobs:
           npm ci
 
       - name: Taqueria compile and originate
-        uses: ecadlabs/taqueria-github-action@v0.1.1
+        uses: ecadlabs/taqueria-github-action@v0.1.2
         with:
           plugins: '@taqueria/plugin-jest'
           compile_command: 'compile'
