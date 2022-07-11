@@ -14,7 +14,7 @@ describe("JavaScript tests for Hello Tacos contract", () => {
     sk: "edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt",
     pk: "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6"
   };
-  const rpcUrl = "http://172.17.0.1:20000";
+  const rpcUrl = "http://localhost:20000";
   const originalNrOfTacos = 100;
 
   jest.setTimeout(50000);
