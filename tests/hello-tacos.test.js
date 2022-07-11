@@ -1,6 +1,6 @@
 const { TezosToolkit } = require("@taquito/taquito");
 const { InMemorySigner } = require("@taquito/signer");
-const contractCode = require("../contract/contract.json");
+const contractCode = require("../contracts/contract.json");
 
 describe("JavaScript tests for Hello Tacos contract", () => {
   let Tezos;
