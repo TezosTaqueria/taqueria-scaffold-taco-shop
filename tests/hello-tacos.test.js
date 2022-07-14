@@ -1,5 +1,6 @@
 const { TezosToolkit } = require("@taquito/taquito");
 const { InMemorySigner } = require("@taquito/signer");
+const contractCode = require("../contracts/contract.json");
 const config = require('../.taq/config.json')
 
 describe("JavaScript tests for Hello Tacos contract", () => {
@@ -15,9 +16,9 @@ describe("JavaScript tests for Hello Tacos contract", () => {
 
   beforeAll(async () => {
     Tezos = new TezosToolkit(rpcUrl);
-    signer = new InMemorySigner(alice.keys.secretKey.replace(/unencrypted:/, ''));
+    signer = new InMemorySigner(alice.secretKey.replace(/unencrypted:/, ''));
     Tezos.setSignerProvider(signer);
-    const op = await Tezos.contract.transfer({ to: bob.keys.publicKey, amount: 1 });
+    const op = await Tezos.contract.transfer({ to: bob.publicKeyHash, amount: 1 });
     await op.confirmation();
   });
 
