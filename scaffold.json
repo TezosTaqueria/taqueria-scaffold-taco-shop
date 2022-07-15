@@ -1,0 +1,3 @@
+{
+"postInit": "npm run setup && taq"
+}
