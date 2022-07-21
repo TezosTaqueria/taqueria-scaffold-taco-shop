@@ -4,6 +4,8 @@ const util = require('node:util');
 
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
+        console.log(execSync(`which taq`));
+        console.log(execSync(`ll taq`));
 		const accounts = execSync(`taq list accounts local`);
         console.log(accounts)
 		// expect(accounts.stdout).toContain('bob');
