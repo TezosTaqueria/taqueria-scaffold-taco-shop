@@ -25,7 +25,8 @@ jobs:
       - name: Taqueria compile and originate
         uses: ecadlabs/taqueria-github-action@v0.1.2
         with:
-          plugins: '@taqueria/plugin-jest'
+          plugins: '@taqueria/plugin-ligo, @taqueria/plugin-jest'
+          contracts: 'hello-tacos.mligo'
           compile_command: 'compile'
           sandbox_name: 'local'
           originate: True

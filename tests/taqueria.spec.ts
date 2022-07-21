@@ -1,10 +1,10 @@
-const { exec1 } = require('node:child_process');
+const { exec } = require('node:child_process');
 const util = require('node:util');
-const exec = util.promisify(exec1);
+const execPromise = util.promisify(exec);
 
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
-		const accounts = await exec(`taq list accounts local`, { cwd: `./` });
+		const accounts = await execPromise(`taq list accounts local`, { cwd: `./` });
 		expect(accounts.stdout).toContain('bob');
         expect(accounts.stdout).toContain('alice');
         expect(accounts.stdout).toContain('john');
@@ -13,14 +13,14 @@ describe('E2E Testing for taqueria action', () => {
 	});
 
     test('Verify that taqueria can compile a previously registered contract', async () => {
-		const accounts = await exec(`taq compile`, { cwd: `./` });
+		const accounts = await execPromise(`taq compile`, { cwd: `./` });
 		expect(accounts.stdout).toContain('artifacts/hell-tacos.tz');
 	});
 
     test('Verify that taqueria can originate a contract to the local sandbox', async () => {
         const contractName = 'hello-tacos.tz'
 
-		const contractOriginate = await exec(`taq originate ${contractName}`, { cwd: `./` });
+		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
 		expect(contractOriginate.stdout).toContain('local');
 
@@ -29,7 +29,7 @@ describe('E2E Testing for taqueria action', () => {
         ?.split('│')[2]
         .trim()
 
-        const sandboxContractContents = await exec(`http://localhost:20000/chains/main/blocks/head/context/contracts/${contractHash}`)
+        const sandboxContractContents = await execPromise(`http://localhost:20000/chains/main/blocks/head/context/contracts/${contractHash}`)
         expect(sandboxContractContents.stdout).toContain('"storage":{"int":"42"}')
 
 	});
