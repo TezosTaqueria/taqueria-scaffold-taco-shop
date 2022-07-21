@@ -1,12 +1,12 @@
-const { execSync } = require('node:child_process');
+const { exec } = require('node:child_process');
 const util = require('node:util');
 // const execPromise = util.promisify(exec);
 
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
-        console.log(execSync(`which taq`));
-        console.log(execSync(`ll taq`));
-		const accounts = execSync(`taq list accounts local`);
+        console.log(exec(`which taq`).stdout);
+        console.log(exec(`ls -al taq`).stdout);
+		const accounts = exec(`taq list accounts local`);
         console.log(accounts)
 		// expect(accounts.stdout).toContain('bob');
         // expect(accounts.stdout).toContain('alice');
