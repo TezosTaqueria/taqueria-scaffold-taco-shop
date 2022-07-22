@@ -5,8 +5,9 @@ const execPromise = util.promisify(exec);
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
         console.log(await execPromise(`ls -al /bin/taq`));
-		const accounts = execPromise(`sudo taq list accounts local`);
+		const accounts = await execPromise(`sudo taq list accounts local`);
         console.log(accounts)
+        console.log(accounts.stdout)
 		// expect(accounts.stdout).toContain('bob');
         // expect(accounts.stdout).toContain('alice');
         // expect(accounts.stdout).toContain('john');
