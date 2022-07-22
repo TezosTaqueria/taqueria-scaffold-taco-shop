@@ -2,6 +2,8 @@ const { exec } = require('node:child_process');
 const util = require('node:util');
 const execPromise = util.promisify(exec);
 
+jest.setTimeout(30000);
+
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
         console.log(await execPromise(`ls -al /github/workspace/.taq/`));
@@ -23,7 +25,6 @@ describe('E2E Testing for taqueria action', () => {
 
     test('Verify that taqueria can originate a contract to the local sandbox', async () => {
         const contractName = 'hello-tacos.tz'
-        jest.setTimeout(30000)
 
 		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
