@@ -23,7 +23,7 @@ jobs:
           npm ci
 
       - name: Taqueria compile and originate
-        uses: ecadlabs/taqueria-github-action@v0.2.0-rc5
+        uses: ecadlabs/taqueria-github-action@v0.2.1-rc5
         with:
           plugins: '@taqueria/plugin-ligo, @taqueria/plugin-jest'
           contracts: 'hello-tacos.mligo'
