@@ -18,11 +18,12 @@ describe('E2E Testing for taqueria action', () => {
 
     test('Verify that taqueria can compile a previously registered contract', async () => {
 		const accounts = await execPromise(`taq compile`, { cwd: `./` });
-		expect(accounts.stdout).toContain('artifacts/hell-tacos.tz');
+		expect(accounts.stdout).toContain('artifacts/hello-tacos.tz');
 	});
 
     test('Verify that taqueria can originate a contract to the local sandbox', async () => {
         const contractName = 'hello-tacos.tz'
+        jest.setTimeout(30000)
 
 		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
