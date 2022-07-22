@@ -6,11 +6,8 @@ jest.setTimeout(30000);
 
 describe('E2E Testing for taqueria action', () => {
 	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
-        console.log(await execPromise(`ls -al /github/workspace/.taq/`));
-        console.log(await execPromise(`ls -al /bin/taq`));
 		const accounts = await execPromise(`taq list accounts local`);
-        console.log(accounts)
-        console.log(accounts.stdout)
+
 		expect(accounts.stdout).toContain('bob');
         expect(accounts.stdout).toContain('alice');
         expect(accounts.stdout).toContain('john');
