@@ -9,11 +9,6 @@ describe('E2E Testing for taqueria action', () => {
 		const accounts = await execPromise(`taq list accounts local`);
         console.log(accounts)
         console.log(accounts.stdout)
-		expect(accounts.stdout).toContain('bob');
-        expect(accounts.stdout).toContain('alice');
-        expect(accounts.stdout).toContain('john');
-        expect(accounts.stdout).toContain('jane');
-        expect(accounts.stdout).toContain('joe');
 	});
 
     // test('Verify that taqueria can compile a previously registered contract', async () => {
