@@ -23,10 +23,9 @@ jobs:
           npm ci
 
       - name: Taqueria compile and originate
-        uses: ecadlabs/taqueria-github-action@v0.1.2
+        uses: ecadlabs/taqueria-github-action@v0.2.2
         with:
-          plugins: '@taqueria/plugin-jest'
-          compile_command: 'compile'
+          plugins: '@taqueria/plugin-ligo, @taqueria/plugin-jest'
+          contracts: 'hello-tacos.mligo'
           sandbox_name: 'local'
-          originate: True
           tests: True
