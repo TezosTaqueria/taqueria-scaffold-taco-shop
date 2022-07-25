@@ -27,7 +27,5 @@ jobs:
         with:
           plugins: '@taqueria/plugin-ligo, @taqueria/plugin-jest'
           contracts: 'hello-tacos.mligo'
-          # compile_command: 'compile'
           sandbox_name: 'local'
-          # originate: True
           tests: True
