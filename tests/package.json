@@ -4,7 +4,7 @@
   "description": "Hello world contract in Ligo",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./hello-tacos.test.js",
+    "test": "jest ./taqueria.spec.ts",
     "compile-contract": "ligo compile-contract ./contract/hello-tacos.mligo main",
     "compile-contract-to-json": "ligo compile-contract ./contract/hello-tacos.mligo main > ./contract/contract.json --michelson-format=json",
     "ligo-test": "ligo run test ./contract/hello-tacos-test.mligo",
