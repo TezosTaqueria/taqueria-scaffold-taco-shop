@@ -22,10 +22,10 @@
   },
   "homepage": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop#readme",
   "devDependencies": {
-    "@taqueria/plugin-flextesa": "latest",
-    "@taqueria/plugin-jest": "latest",
-    "@taqueria/plugin-ligo": "latest",
-    "@taqueria/plugin-taquito": "latest"
+    "@taqueria/plugin-flextesa": "next",
+    "@taqueria/plugin-jest": "next",
+    "@taqueria/plugin-ligo": "next",
+    "@taqueria/plugin-taquito": "next"
   },
   "main": "index.js",
   "dependencies": {
