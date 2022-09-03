@@ -25,7 +25,8 @@
     "@taqueria/plugin-flextesa": "^0.13.16",
     "@taqueria/plugin-jest": "^0.13.16",
     "@taqueria/plugin-ligo": "^0.13.16",
-    "@taqueria/plugin-taquito": "^0.13.16"
+    "@taqueria/plugin-taquito": "^0.13.16",
+    "@types/jest": "^29.0.0"
   },
   "main": "index.js",
   "dependencies": {

@@ -17,6 +17,7 @@
   "author": "Claude Barde",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.0.0",
     "jest": "^27.4.4"
   },
   "dependencies": {
