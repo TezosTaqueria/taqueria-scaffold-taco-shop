@@ -7,8 +7,8 @@
   },
   "scripts": {
     "setup": "npm run setup:taqueria && npm run setup:app",
-    "setup:taqueria": "yarn && taq init",
-    "setup:app": "cd ./app && yarn"
+    "setup:taqueria": "npm install && taq init",
+    "setup:app": "cd ./app && npm install"
   },
   "repository": {
     "type": "git",
