@@ -33,7 +33,7 @@ describe('E2E Testing for taqueria action', () => {
         .trim()
 
         const sandboxContractContents = await execPromise(`curl http://localhost:20000/chains/main/blocks/head/context/contracts/${contractHash}`)
-        expect(sandboxContractContents.stdout).toContain('"storage":{"int":"100"}')
+        expect(sandboxContractContents.stdout).toContain('"storage":{"int":"42"}')
 
 	});
 });
