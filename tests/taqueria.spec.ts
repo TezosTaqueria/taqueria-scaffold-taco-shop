@@ -15,8 +15,8 @@ describe('E2E Testing for taqueria action', () => {
         expect(accounts.stdout).toContain('joe');
 	});
 
-    test.skip('Verify that taqueria can compile a previously registered contract', async () => {
-		const accounts = await execPromise(`taq compile hello-tacos.msligo`, { cwd: `./` });
+    test('Verify that taqueria can compile a previously registered contract', async () => {
+		const accounts = await execPromise(`taq compile hello-tacos.mligo`, { cwd: `./` });
 		expect(accounts.stdout).toContain('artifacts/hello-tacos.tz');
 	});
 
