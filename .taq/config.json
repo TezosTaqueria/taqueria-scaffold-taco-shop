@@ -2,11 +2,11 @@
     "language": "en",
     "plugins": [
         {
-            "name": "@taqueria/plugin-flextesa",
+            "name": "@taqueria/plugin-ligo",
             "type": "npm"
         },
         {
-            "name": "@taqueria/plugin-ligo",
+            "name": "@taqueria/plugin-flextesa",
             "type": "npm"
         },
         {
@@ -14,7 +14,7 @@
             "type": "npm"
         },
         {
-            "name": "@taqueria/plugin-jest",
+            "name": "@taqueria/plugin-ipfs-pinata",
             "type": "npm"
         }
     ],
@@ -65,18 +65,13 @@
             "sandboxes": [
                 "local"
             ],
-            "storage": {
-                "hello-tacos.tz": 42
-            }
+            "storage": {}
         },
         "testing": {
             "networks": [
                 "ghostnet"
             ],
-            "sandboxes": [],
-            "storage": {
-                "hello-tacos.tz": 42
-            }
+            "sandboxes": []
         }
     },
     "accounts": {
