@@ -27,7 +27,8 @@
     "@taqueria/plugin-jest": "^0.14.4",
     "@taqueria/plugin-ligo": "^0.14.4",
     "@taqueria/plugin-metadata": "^0.14.4",
-    "@taqueria/plugin-taquito": "^0.14.4"
+    "@taqueria/plugin-taquito": "^0.14.4",
+    "@types/jest": "^29.0.0"
   },
   "main": "index.js",
   "dependencies": {

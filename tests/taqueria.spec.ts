@@ -16,7 +16,7 @@ describe('E2E Testing for taqueria action', () => {
 	});
 
     test('Verify that taqueria can compile a previously registered contract', async () => {
-		const accounts = await execPromise(`taq compile`, { cwd: `./` });
+		const accounts = await execPromise(`taq compile hello-tacos.mligo`, { cwd: `./` });
 		expect(accounts.stdout).toContain('artifacts/hello-tacos.tz');
 	});
 

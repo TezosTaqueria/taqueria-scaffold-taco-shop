@@ -1,2 +1,6 @@
 #include "hello-tacos.mligo"
-let available_tacos = 42
+// All storage values must be in this file
+
+// Define a storage variable
+
+let storage:available_tacos = 42n
