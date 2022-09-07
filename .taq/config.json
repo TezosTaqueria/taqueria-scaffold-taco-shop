@@ -59,18 +59,13 @@
         }
     },
     "environment": {
-        "default": "development",
+        "default": "testing",
         "development": {
             "networks": [],
             "sandboxes": [
                 "local"
             ],
-            "storage": {},
-            "aliases": {
-                "hello-tacos": {
-                    "address": "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
-                }
-            }
+            "storage": {}
         },
         "testing": {
             "networks": [
@@ -79,7 +74,7 @@
             "sandboxes": [],
             "aliases": {
                 "hello-tacos": {
-                    "address": "KT1LSfrkobeTP4172LcSEAFVfPhjmVng7r9w"
+                    "address": "KT1XD1Kku5VwFjMEBsc6LTvmkKFQ1Gd6kcPX"
                 }
             }
         }
