@@ -22,32 +22,32 @@
     "artifactsDir": "artifacts",
     "network": {
         "ghostnet": {
-            "label": "Ghostnet Testnet",
-            "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
+            "label": "ghostnet",
+            "rpcUrl": "https://rpc.ithacanet.teztnets.xyz",
             "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
             "faucet": {
-                "pkh": "tz1SkFaEFov3xsifrFHfVuSgXLvjD3rCRaQb",
+                "pkh": "tz1ge3zb6kC5iUZcXsjxiwwtU5MwP37T6m1z",
                 "mnemonic": [
-                    "delay",
-                    "ritual",
-                    "treat",
-                    "empty",
-                    "jacket",
-                    "believe",
-                    "lucky",
-                    "note",
-                    "uncover",
-                    "child",
-                    "warfare",
-                    "payment",
-                    "session",
-                    "imitate",
-                    "when"
+                    "donor",
+                    "own",
+                    "people",
+                    "unusual",
+                    "congress",
+                    "meadow",
+                    "diesel",
+                    "table",
+                    "orient",
+                    "table",
+                    "craft",
+                    "donate",
+                    "album",
+                    "sound",
+                    "club"
                 ],
-                "email": "qyfwdnnq.pegsrakz@teztnets.xyz",
-                "password": "Pz7SKUfNVm",
-                "amount": "9689377231",
-                "activation_code": "c748b85bb936f728784c5934da5523947aad0dbd"
+                "email": "garexkby.gwzlnccc@teztnets.xyz",
+                "password": "PMH8QE4pc5",
+                "amount": "101486787943",
+                "activation_code": "40d3b8396baf3fbcbb19d0c77bf38d8b184bb875"
             }
         }
     },
@@ -65,13 +65,23 @@
             "sandboxes": [
                 "local"
             ],
-            "storage": {}
+            "storage": {},
+            "aliases": {
+                "hello-tacos": {
+                    "address": "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
+                }
+            }
         },
         "testing": {
             "networks": [
                 "ghostnet"
             ],
-            "sandboxes": []
+            "sandboxes": [],
+            "aliases": {
+                "hello-tacos": {
+                    "address": "KT1LSfrkobeTP4172LcSEAFVfPhjmVng7r9w"
+                }
+            }
         }
     },
     "accounts": {
