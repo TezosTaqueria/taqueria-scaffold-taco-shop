@@ -9,6 +9,8 @@ import "./styles/Header.css";
 import "./styles/Interface.css";
 import "./styles/Footer.css";
 import "./styles/Wallet.css";
+import { getAliasAddress } from "@taqueria/toolkit";
+import config from "./config.json";
 
 function App() {
 
@@ -16,7 +18,9 @@ function App() {
 
   const [rpcUrl, setRpcUrl] = useState("https://rpc.ghostnet.teztnets.xyz");
   const [contractAddress, setContractAddress] = useState(
-    "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
+    // "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
+    // config.environment.development.aliases["hello-tacos"].address
+    getAliasAddress(config, "hello-tacos")
   );
   const [contractStorage, setContractStorage] = useState<number | undefined>(
     undefined
