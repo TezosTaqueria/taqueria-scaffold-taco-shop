@@ -1,23 +1,5 @@
 {
     "language": "en",
-    "plugins": [
-        {
-            "name": "@taqueria/plugin-ligo",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-flextesa",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-taquito",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-ipfs-pinata",
-            "type": "npm"
-        }
-    ],
     "contractsDir": "contracts",
     "artifactsDir": "artifacts",
     "network": {
@@ -74,7 +56,7 @@
             "sandboxes": [],
             "aliases": {
                 "hello-tacos": {
-                    "address": "KT1XD1Kku5VwFjMEBsc6LTvmkKFQ1Gd6kcPX"
+                    "address": "KT1CPASSW7rstFQw6vENBkXmG6mJNsDMauTP"
                 }
             }
         }
@@ -85,5 +67,23 @@
         "john": "3_000_000_000",
         "jane": "3_000_000_000",
         "joe": "3_000_000_000"
-    }
+    },
+    "plugins": [
+        {
+            "name": "@taqueria/plugin-ligo",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-flextesa",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-taquito",
+            "type": "npm"
+        },
+        {
+            "name": "@taqueria/plugin-ipfs-pinata",
+            "type": "npm"
+        }
+    ]
 }

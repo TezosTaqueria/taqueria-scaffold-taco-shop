@@ -14,8 +14,9 @@ const Footer = ({ contractAddress }: { contractAddress: string }) => (
         href={`https://better-call.dev/ghostnet/${contractAddress}/operations`}
         target="_blank"
         rel="noopener noreferrer nofollow"
+        title={contractAddress}
       >
-        <img src="images/file-text.svg" alt="contract-link" />
+        <img src="images/file-text.svg" alt="contract-link" title={contractAddress} alt={contractAddress} />
       </a>
     </div>
     <div>

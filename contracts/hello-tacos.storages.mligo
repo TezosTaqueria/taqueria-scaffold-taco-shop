@@ -2,5 +2,7 @@
 // All storage values must be in this file
 
 // Define a storage variable
-
-let storage:available_tacos = 42n
+let storage: storage = {
+    available_tacos = 42n;
+    admin = (Tezos.get_sender ())
+}
