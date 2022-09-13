@@ -85,8 +85,5 @@
             "name": "@taqueria/plugin-ipfs-pinata",
             "type": "npm"
         }
-    ],
-    "projectDir": "/Users/mweichert/Projects/taco-shop",
-    "configFile": "/Users/mweichert/Projects/taco-shop/.taq/config.json",
-    "hash": "046930037b10d74b7b874f385efe320cbeb3c399648b770b21ec3ddbcddadb70"
+    ]
 }
