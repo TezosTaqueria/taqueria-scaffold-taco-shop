@@ -128,7 +128,7 @@ Tests are located in `tests` folder.
 
 > Before running test please run local sandbox by running `taq start sandbox local` or update tests to run against testnet/mainnet 
 
-To run the test just type `taq test`
+To run tests just type `taq test`
 
 ### React Dapp
 
