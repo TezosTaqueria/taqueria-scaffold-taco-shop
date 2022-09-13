@@ -16,7 +16,7 @@ const Footer = ({ contractAddress }: { contractAddress: string }) => (
         rel="noopener noreferrer nofollow"
         title={contractAddress}
       >
-        <img src="images/file-text.svg" alt="contract-link" title={contractAddress} alt={contractAddress} />
+        <img src="images/file-text.svg" title={contractAddress} alt={contractAddress} />
       </a>
     </div>
     <div>
