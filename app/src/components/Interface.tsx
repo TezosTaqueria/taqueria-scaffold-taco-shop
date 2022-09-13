@@ -28,7 +28,6 @@ const Interface = ({
       !insufficientTacos
     ) {
       try {
-        debugger
         setOrderingTacos(true);
         const contract = await Tezos.wallet.at(contractAddress);
         const op = await contract.methods.buy(tacosToOrder).send();
