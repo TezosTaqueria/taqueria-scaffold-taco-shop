@@ -228,7 +228,7 @@ By default, every page refresh will deploy new contract and reset contract data
 ### Insert the Contract Address (Optional)
 
 There is a way to point dApp to a hardcoded contract.
-To do so you need to insert the address of the contract into the `/app/index.tsx` file. Copy the address returned from the command above and paste it into the `contractAddress` variable in the `/app/index.tsx` file as shown here:
+To do so you need to insert the address of the contract into the `/app/App.tsx` file. Copy the address returned from the command above and paste it into the `contractAddress` variable in the `/app/index.tsx` file as shown here:
 
 ```ts /app/src/app.tsx
 function app() {
