@@ -56,7 +56,7 @@
             "sandboxes": [],
             "aliases": {
                 "hello-tacos": {
-                    "address": "KT1CPASSW7rstFQw6vENBkXmG6mJNsDMauTP"
+                    "address": "KT1LMNSCTCprDtuzAJ5GiAHNdC1r5q8qiZYc"
                 }
             }
         }
@@ -85,5 +85,8 @@
             "name": "@taqueria/plugin-ipfs-pinata",
             "type": "npm"
         }
-    ]
+    ],
+    "projectDir": "/Users/jimmychenchen/Desktop/test/demo",
+    "configFile": "/Users/jimmychenchen/Desktop/test/demo/.taq/config.json",
+    "hash": "8d5749cfcddad4b88db6c41414970fbc82992af24dcc45e5d2aee3599405b5f9"
 }
