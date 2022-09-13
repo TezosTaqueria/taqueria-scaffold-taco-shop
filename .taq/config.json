@@ -85,8 +85,5 @@
             "name": "@taqueria/plugin-ipfs-pinata",
             "type": "npm"
         }
-    ],
-    "projectDir": "/Users/jimmychenchen/Desktop/test/demo",
-    "configFile": "/Users/jimmychenchen/Desktop/test/demo/.taq/config.json",
-    "hash": "8d5749cfcddad4b88db6c41414970fbc82992af24dcc45e5d2aee3599405b5f9"
+    ]
 }
