@@ -5,7 +5,7 @@
     "network": {
         "ghostnet": {
             "label": "ghostnet",
-            "rpcUrl": "https://rpc.ithacanet.teztnets.xyz",
+            "rpcUrl": "https://ghostnet.ecadinfra.com",
             "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
             "faucet": {
                 "pkh": "tz1ge3zb6kC5iUZcXsjxiwwtU5MwP37T6m1z",
@@ -82,7 +82,7 @@
             "type": "npm"
         },
         {
-            "name": "@taqueria/plugin-ipfs-pinata",
+            "name": "@taqueria/plugin-jest",
             "type": "npm"
         }
     ]

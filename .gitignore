@@ -132,3 +132,6 @@ dist
 .taq/development-state.json
 .taq/ghostnet-state.json
 .taq/testing-state.json
+
+# WebStorm configuration files
+.idea/
