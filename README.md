@@ -152,7 +152,7 @@ This will clone the Taco Shop scaffold project into a directory called `taco-sho
 
 ## Project Setup
 
-To work on the project simple change into the project directory:
+To work on the project you need to get into the project directory:
 
 ```shell
 cd hello-tacos
