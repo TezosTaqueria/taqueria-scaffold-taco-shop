@@ -8,12 +8,6 @@
 | Frontend Dapp      | Yes                           |
 | Wallet Integration | Yes                           |
 
-## Quickstart
-
-In a rush? You can follow the steps below to get up and running immediately:
-
-1. `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
-2. `cd taco-shop/`
 
 ## Overview
 
@@ -47,7 +41,36 @@ The project comes pre-configured with the following:
 - A funded testnet account
 - A [faucet file](https://teztnets.xyz)
 
+## Using the Project
+
+The intended workflow for this project is as follows:
+
+1. Compile the LIGO mulit-file source code
+2. Originate the smart contract to the testnet
+3. Insert the returned contract address into the React dApp
+4. Build and start the React dApp
+5. Connect to Temple wallet
+6. Buy tacos!
+
 ## Project Overview
+
+### Scaffold the Project
+
+This project is available as a Taqueria scaffold. To create a new project from this scaffold, run the following command:
+
+```shell
+taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop
+```
+
+This will clone the Taco Shop scaffold project into a directory called `taco-shop`
+
+### Project Setup
+
+To work on the project you need to get into the project directory:
+
+```shell
+cd hello-tacos
+```
 
 ### Project Structure
 
@@ -140,34 +163,6 @@ The React dApp retrieves the number of available tacos from the smart contract a
 
 > This will be fixed in the future when contract addresses will be passed via the State API dynamically
 
-## Scaffold the Project
-
-This project is available as a Taqueria scaffold. To create a new project from this scaffold, run the following command:
-
-```shell
-taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop
-```
-
-This will clone the Taco Shop scaffold project into a directory called `taco-shop`
-
-## Project Setup
-
-To work on the project you need to get into the project directory:
-
-```shell
-cd hello-tacos
-```
-
-## Using the Project
-
-The intended workflow for this project is as follows:
-
-1. Compile the LIGO mulit-file source code
-2. Originate the smart contract to the testnet
-3. Insert the returned contract address into the React dApp
-4. Build and start the React dApp
-5. Connect to Temple wallet
-6. Buy tacos!
 
 ### Compile the Contract
 
