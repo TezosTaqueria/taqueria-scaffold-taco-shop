@@ -8,6 +8,13 @@
 | Frontend Dapp      | Yes                           |
 | Wallet Integration | Yes                           |
 
+## Quickstart
+
+In a rush? You can follow the steps below to get up and running immediatley:
+
+1. `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
+2. `npm run setup`
+3. `npm run start:app`
 
 ## Overview
 
@@ -218,7 +225,7 @@ npm run start
 
 ### Hot Reload Contract Address 
 
-By default, every page refresh will deploy new contract and reset contract data
+By default, page refresh updates the page UI to point to the address of the new deployment.
 
 ### Insert the Contract Address (Optional)
 

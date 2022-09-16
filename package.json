@@ -8,7 +8,8 @@
   "scripts": {
     "setup": "npm run setup:taqueria && npm run setup:app",
     "setup:taqueria": "npm install && taq init",
-    "setup:app": "cd ./app && npm install"
+    "setup:app": "cd ./app && npm install",
+    "start:app": "cd app && npm run start"
   },
   "repository": {
     "type": "git",
