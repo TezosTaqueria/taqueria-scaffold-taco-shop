@@ -1,12 +1,12 @@
 # Taco Shop
 
-| Scaffold Details   |                               |
-|--------------------|-------------------------------|
-| Complexity         | Beginner                      |
-| Automated Tests    | Yes                           |
-| Installed Plugins  | LIGO, Taquito, Flextesa, Jest |
-| Frontend Dapp      | Yes                           |
-| Wallet Integration | Yes                           |
+| Scaffold Details   |                                               |
+|--------------------|-----------------------------------------------|
+| Complexity         | Beginner                                      |
+| Automated Tests    | Yes                                           |
+| Installed Plugins  | LIGO, Taquito, Flextesa, Contract-Types, Jest |
+| Frontend Dapp      | Yes                                           |
+| Wallet Integration | Yes                                           |
 
 ## Quickstart
 
@@ -55,10 +55,11 @@ The intended workflow for this project is as follows:
 
 1. Compile the LIGO mulit-file source code
 2. Originate the smart contract to the testnet
-3. Insert the returned contract address into the React dApp
-4. Build and start the React dApp
-5. Connect to Temple wallet
-6. Buy tacos!
+3. Generate contract types for the smart contract
+4. Insert the returned contract address into the React dApp
+5. Build and start the React dApp
+6. Connect to Temple wallet
+7. Buy tacos!
 
 ## Project Overview
 
@@ -201,6 +202,14 @@ This should return the address of the contract on the testnet which looks like t
 > This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](/docs/getting-started/networks)
 :::
 
+### Generate Contract Types for the Contract
+```shell
+taq generate types contract_types
+```
+
+This will search the artifacts directory and generate contract types for each tz contract found within that directory. Any files found will then have their type files output into the `contract_types` directory.
+
+THIS AREA IS WHERE OTHER STUFF WILL GO IN TERMS OF HOW TO INTERACT WITH/USE THE GENERATED TYPES
 
 ### Build and Start the React Dapp
 

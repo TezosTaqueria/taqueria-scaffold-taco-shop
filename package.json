@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop#readme",
   "devDependencies": {
+    "@taqueria/plugin-contract-types": "^0.18.0",
     "@taqueria/plugin-flextesa": "^0.18.0",
     "@taqueria/plugin-jest": "^0.18.0",
     "@taqueria/plugin-ligo": "^0.18.0",
