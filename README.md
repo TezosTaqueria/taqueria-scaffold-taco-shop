@@ -46,8 +46,8 @@ The project comes pre-configured with the following:
 - Docker v0.9 or later
 - Node.js v16 or later
 - Beacon or Kukai Wallet
-- A funded testnet account
-- A [faucet file](https://teztnets.xyz)
+- A funded testnet account (instructions (here)[https://taqueria.io/docs/config/networks/#faucets])
+
 
 ## Using the Project
 
@@ -198,7 +198,7 @@ This should return the address of the contract on the testnet which looks like t
 └────────────────┴──────────────────────────────────────┴────────────────┘────────────────┘
 ```
 
-> This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](/docs/getting-started/networks)
+> This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](https://taqueria.io/docs/config/networks/)
 :::
 
 
