@@ -46,7 +46,7 @@ The project comes pre-configured with the following:
 - Docker v0.9 or later
 - Node.js v16 or later
 - Beacon or Kukai Wallet
-- A funded testnet account (instructions (here)[https://taqueria.io/docs/config/networks/#faucets])
+- A funded testnet account (instructions [here](https://taqueria.io/docs/config/networks/#faucets))
 
 
 ## Using the Project
