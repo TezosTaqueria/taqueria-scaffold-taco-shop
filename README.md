@@ -266,3 +266,5 @@ With your wallet connected, you can now interact with the contract entrypoint
 Click the `order` button and then authorize the transaction in Temple Wallet
 
 Once completed, you will see the value of `available_tacos` decrease by the number of tacos you ordered
+
+Alternatively, you could buy tacos with the Taq CLI by executing `taq call hello-tacos.tz --param hello-tacos.parameter.buySomeTacos.tz`
