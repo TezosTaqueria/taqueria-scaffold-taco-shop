@@ -7,10 +7,14 @@
 | Installed Plugins  | LIGO, Taquito, Flextesa, Jest |
 | Frontend Dapp      | Yes                           |
 | Wallet Integration | Yes                           |
+| Frontend Dapp      | Yes                           |
+| Wallet Integration | Yes                           |
 
 ## Quickstart
 
 In a rush? You can follow the steps below to get up and running immediatley:
+
+### Scaffold and Initialize the Project
 
 1. `taq scaffold https://github.com/ecadlabs/taqueria-scaffold-taco-shop taco-shop`
 1. `cd taco-shop`
@@ -92,7 +96,6 @@ cd taco-shop
 
 The smart contract `hello-tacos.mligo` is simple and straightforward. It stores the number of `available_tacos` in the contract storage, and provides an entrypoint that accepts a `tacos_to_buy` parameter which will decrease the number of available_tacos by the number of tacos_to_buy
 
-It consists of following files:
 1. `hello-tacos.mligo` file itself:
 ```js
 #include "_buy.mligo"
@@ -160,9 +163,7 @@ The React dApp retrieves the number of available tacos from the smart contract a
 ![Hello Tacos Screenshot](hello-tacos-screenshot.png)
 
 > In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/app/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use
-
 > This will be fixed in the future when contract addresses will be passed via the State API dynamically
-
 
 ### Compile the Contract
 
@@ -193,7 +194,6 @@ This should return the address of the contract on the testnet which looks like t
 > This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](https://taqueria.io/docs/config/networks/)
 :::
 
-
 ### Build and Start the React Dapp
 
 Now that the contract has been deployed and the address added to the dApp, you can build and start the React dApp
@@ -215,6 +215,8 @@ Start and serve the dApp:
 ```shell 
 npm run start
 ```
+
+You should now be able to access the Taco Shop dApp at [http://localhost:3000](http://localhost:3000/)
 
 ### Hot Reload Contract Address 
 
@@ -238,8 +240,6 @@ function app() {
   const [Tezos, setTezos] = useState<TezosToolkit>();
   const [connected, setConnected] = useState(false);
 ```
-
-You should now be able to access the Taco Shop dApp at [http://localhost:3000](http://localhost:3000/)
 
 ### Connect to Temple Wallet
 
@@ -277,4 +277,3 @@ Then, run the Jest tests in the `tests` directory with the following command:
 ```shell
 taq test
 ```
-
