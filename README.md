@@ -29,7 +29,7 @@ The project comes pre-configured with the following:
 
 - Plugins: LIGO, Flextesa, Taquito, Jest
 - A LIGO multi-file smart contract: `hello-tacos.mligo`, `_buy.mligo`, `_make.mligo`, `_schema.mligo`
-- A network configuration for the Ithaca testnet
+- A network configuration for the Ghostnet testnet
 - An environment named `ghostnet` with faucet to fund operations on the testnet
 - Native Taqueria testing (Taqueria Jest plugin)
 
@@ -53,7 +53,7 @@ The project comes pre-configured with the following:
 
 The intended workflow for this project is as follows:
 
-1. Compile the LIGO mulit-file source code
+1. Compile the LIGO multi-file source code
 2. Originate the smart contract to the testnet
 3. Insert the returned contract address into the React dApp
 4. Build and start the React dApp
@@ -77,14 +77,14 @@ This will clone the Taco Shop scaffold project into a directory called `taco-sho
 To work on the project you need to get into the project directory:
 
 ```shell
-cd hello-tacos
+cd taco-shop
 ```
 
 ### Project Structure
 
 - `/.taq` - This hidden folder stores the Taqueria configuration and state
 - `/app` - This is the React dApp 
-- `/contracts` - This folder contains the LIGO smart contracts
+- `/contracts` - This folder contains the multiple file LIGO smart contract
 - `/tests` - This folder contains the automated tests
 - `/artifacts` - This folder contains the compiled Michelson `.tz` contracts
 
@@ -92,8 +92,8 @@ cd hello-tacos
 
 The smart contract `hello-tacos.mligo` is simple and straightforward. It stores the number of `available_tacos` in the contract storage, and provides an entrypoint that accepts a `tacos_to_buy` parameter which will decrease the number of available_tacos by the number of tacos_to_buy
 
-It consists of next files:
-1. `hello-tacos.mligo` itself:
+It consists of following files:
+1. `hello-tacos.mligo` file itself:
 ```js
 #include "_buy.mligo"
 #include "_make.mligo"
@@ -153,14 +153,6 @@ let storage: storage = {
 }
 ```
 
-### Testing
-
-Tests are located in `tests` folder.
-
-> Before running test please run local sandbox by running `taq start sandbox local` or update tests to run against testnet/mainnet 
-
-To run tests just type `taq test`
-
 ### React Dapp
 
 The React dApp retrieves the number of available tacos from the smart contract and displays the value. It provides an interface for the user to buy tacos and looks like this:
@@ -185,7 +177,7 @@ This will compile multi-file contract `hello-tacos.mligo` to a file, `/artifacts
 Run the following command to originate the contract to the ghostnet environment:
 
 ```shell
-taq originate -e testing
+taq originate hello-tacos.tz -e testing
 ```
 
 This should return the address of the contract on the testnet which looks like this:
@@ -198,7 +190,7 @@ This should return the address of the contract on the testnet which looks like t
 └────────────────┴──────────────────────────────────────┴────────────────┘────────────────┘
 ```
 
-> This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](/docs/getting-started/networks)
+> This scaffold comes with a pre-configured faucet file for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet file in the project's `config.json` file with your own which you can get from the [Teztnets Faucet](https://teztnets.xyz/). Further information about network configuration can be found [here](https://taqueria.io/docs/config/networks/)
 :::
 
 
@@ -266,3 +258,19 @@ With your wallet connected, you can now interact with the contract entrypoint
 Click the `order` button and then authorize the transaction in Temple Wallet
 
 Once completed, you will see the value of `available_tacos` decrease by the number of tacos you ordered
+
+## Testing
+
+This scaffold comes with Jest tests in the `tests` folder which has been initalized as a partition. The scaffold uses the `@taqueria/plugin-jest` plugin to run the tests
+
+To run the tests, first make sure you have started a local sandbox by running:
+
+```shell
+taq start sandbox local
+```
+
+Then, run the Jest tests in the `tests` directory with the following command:
+
+```shell
+taq test
+```
