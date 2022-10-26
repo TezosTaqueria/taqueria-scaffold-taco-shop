@@ -7,7 +7,6 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 app/package-lock.json
-package-lock.json
 
 # Taqueria State
 .taq/state.json
