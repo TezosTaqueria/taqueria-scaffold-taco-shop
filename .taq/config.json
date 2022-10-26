@@ -6,7 +6,7 @@
         "ghostnet": {
             "label": "ghostnet",
             "rpcUrl": "https://ghostnet.ecadinfra.com",
-            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY",
+            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg",
             "faucet": {
                 "pkh": "tz1ge3zb6kC5iUZcXsjxiwwtU5MwP37T6m1z",
                 "mnemonic": [
@@ -37,7 +37,7 @@
         "local": {
             "label": "Local Tezos Sandbox",
             "rpcUrl": "http://localhost:20000",
-            "protocol": "PtJakart2xVj7pYXJBXrqHgd82rdkLey5ZeeGwDgPp9rhQUbSqY"
+            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
         }
     },
     "environment": {
