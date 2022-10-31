@@ -16,7 +16,7 @@ function App() {
 
   // Retrieve the most recent address of the deployed contract
 
-  const [rpcUrl] = useState("https://rpc.ghostnet.teztnets.xyz");
+  const [rpcUrl] = useState("https://ghostnet.ecadinfra.com");
   const [contractAddress] = useState(
     // "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
     // config.environment.development.aliases["hello-tacos"].address
