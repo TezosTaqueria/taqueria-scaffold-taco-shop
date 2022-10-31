@@ -29,4 +29,4 @@ jobs:
           compile_contracts: hello-tacos.mligo
           deploy_contracts: hello-tacos.tz
           sandbox_name: local
-          tests: True
+          test_plugin: jest
