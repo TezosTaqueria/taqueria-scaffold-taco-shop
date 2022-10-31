@@ -1,6 +1,6 @@
 # Taco Shop
 
-| Scaffold Details                                                             |
+| Scaffold Details   |                                                         |
 |--------------------|---------------------------------------------------------|
 | Complexity         | Beginner                                                |
 | Automated Tests    | Yes                                                     |
