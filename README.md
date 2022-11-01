@@ -187,7 +187,7 @@ This should return the address of the contract on the testnet which looks like t
 
 The React dApp retrieves the number of available tacos from the smart contract and displays the value. It provides an interface for the user to buy tacos and looks like this:
 
-![Hello Tacos Screenshot](/img/hello-tacos-screenshot.png)
+![Hello Tacos Screenshot](/hello-tacos-screenshot.png)
 
 :warning: In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/app/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use. This will be fixed in the future when contract addresses will be passed via the State API dynamically
 
