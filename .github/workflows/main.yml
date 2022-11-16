@@ -23,7 +23,6 @@ jobs:
           npm ci
 
       - name: Taqueria compile and originate
-        taqueria-v0.24.1-release-updates
         uses: ecadlabs/taqueria-github-action@v0.11.0
         with:
           plugins: '@taqueria/plugin-ligo, @taqueria/plugin-jest, @taqueria/plugin-taquito'
