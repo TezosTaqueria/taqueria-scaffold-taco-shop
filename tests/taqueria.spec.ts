@@ -25,7 +25,6 @@ describe('E2E Testing for taqueria action', () => {
 
 		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
-		expect(contractOriginate.stdout).toContain('.tz');
 
         const contractHash = contractOriginate.stdout.split('\n')
         .find(line => line.includes(contractName))
