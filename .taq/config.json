@@ -10,7 +10,7 @@
         }
     },
     "sandbox": {
-        "local": {
+        "local-scaffold": {
             "label": "Local Tezos Sandbox",
             "rpcUrl": "http://localhost:21000",
             "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
@@ -21,7 +21,7 @@
         "development": {
             "networks": [],
             "sandboxes": [
-                "local"
+                "local-scaffold"
             ],
             "storage": {}
         },
