@@ -5,14 +5,10 @@ const execPromise = util.promisify(exec);
 jest.setTimeout(30000);
 
 describe('E2E Testing for taqueria action', () => {
-	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
-		const accounts = await execPromise(`taq list accounts local`);
 
-		expect(accounts.stdout).toContain('bob');
-        expect(accounts.stdout).toContain('alice');
-        expect(accounts.stdout).toContain('john');
-        expect(accounts.stdout).toContain('jane');
-        expect(accounts.stdout).toContain('joe');
+	test('Verify that taqueria flextesa plugin can return list of accounts from the local sandbox', async () => {
+        const accounts = await execPromise(`taq list accounts local`);
+        ['bob', 'alice', 'john', 'jane', 'joe'].forEach(account => expect(accounts.stdout).toContain(account));
 	});
 
     test('Verify that taqueria can compile a previously registered contract', async () => {
@@ -22,22 +18,15 @@ describe('E2E Testing for taqueria action', () => {
 
     test('Verify that taqueria can originate a contract to the local sandbox', async () => {
         const contractName = 'hello-tacos.tz'
-
 		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
-		expect(contractOriginate.stdout).toContain('local');
-
+        expect(contractOriginate.stdout).toContain('local');
+        // ...This is a no-op, and evidently we don't have a linter rule to detect unused variables...
         const contractHash = contractOriginate.stdout.split('\n')
-        .find(line => line.includes(contractName))
-        ?.split('│')[2]
-        .trim()
+            .find(line => line.includes(contractName)) ?.split('│')[2].trim()
 
-        // TODO: Talk with Alex about this one
+        // The below violates the "unit test at the same level" principle; we should validate with taquito or so.
         // const sandboxContractContents = await execPromise(`curl http://localhost:20000/chains/main/blocks/head/context/contracts/${contractHash}`)
         // expect(sandboxContractContents.stdout).toContain('"storage":{"int":"42"}')
-
 	});
 });
-
-
-
