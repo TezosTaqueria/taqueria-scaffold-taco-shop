@@ -13,8 +13,7 @@
              CAR ;
              SENDER ;
              COMPARE ;
-             EQ ;
-             NOT ;
+             NEQ ;
              IF { DROP 2 ; PUSH string "NOT_ALLOWED" ; FAILWITH }
                 { DUP 2 ; CDR ; ADD ; SWAP ; CAR ; PAIR ; NIL operation ; PAIR } } } }
 
