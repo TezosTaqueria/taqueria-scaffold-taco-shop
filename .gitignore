@@ -6,8 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-app/package-lock.json
-package-lock.json
 
 # Taqueria State
 .taq/state.json
@@ -135,3 +133,7 @@ dist
 
 # WebStorm configuration files
 .idea/
+.DS_Store
+artifacts
+.taq/*-state.json
+node_modules/
