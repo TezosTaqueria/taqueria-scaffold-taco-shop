@@ -1,0 +1,16 @@
+{
+    "aliases": {
+        "hello-tacos": {
+            "address": "KT1Jqe8Dx4m3L2Fo4uwkHHovdoNwhdKavZQd"
+        }
+    },
+    "networkName": "ghostnet",
+    "accounts": {
+        "taqOperatorAccount": {
+            "publicKey": "edpkuXqPUp8XXeCDybiQbkppkoLSxs8vXZtGShE2oX5qbTuzKwZeUf",
+            "publicKeyHash": "tz1b7ZTaUxC3kjWqF2G2pqxsEUK9C2dhPByU",
+            "privateKey": "edskS3bLH43CMLLvZeVtgBpy4Z46NbL4AX82F8JYpgJjzXH6RwmfqnKyhTFmdQKEPkWcWizGMr6zrQ42zTngDNLzEX5zQuJxBA",
+            "mnemonic": "give dumb aerobic belt force vote medal coast spend kangaroo carpet uniform"
+        }
+    }
+}
