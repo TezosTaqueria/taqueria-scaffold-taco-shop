@@ -8,8 +8,8 @@ import "./styles/Header.css";
 import "./styles/Interface.css";
 import "./styles/Footer.css";
 import "./styles/Wallet.css";
-import { getAliasAddress } from "@taqueria/toolkit";
-import config from "./config.json";
+// import { getAliasAddress } from "@taqueria/toolkit";
+// import config from "./config.json";
 import type {Storage} from "./model"
 
 function App() {
@@ -18,9 +18,8 @@ function App() {
 
   const [rpcUrl] = useState("https://ghostnet.ecadinfra.com");
   const [contractAddress] = useState(
-    // "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
-    // config.environment.development.aliases["hello-tacos"].address
-    getAliasAddress(config, "hello-tacos")
+    // getAliasAddress(config, "hello-tacos")
+    "KT1KKSAi9jaSZEF4hkjgcMDh9T924feWEKTy"
   );
   const [contractStorage, setContractStorage] = useState<Storage | undefined>(
     undefined

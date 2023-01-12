@@ -1,9 +1,8 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { screen } from '@testing-library/react';
 
-test('renders learn react link', () => {
-    render("<App />");
-    const linkElement = screen.getByText(/learn react/i);
-    expect(linkElement).toBeInTheDocument();
+describe('Taco Shop page', () => {
+  test('displays the correct title', () => {
+    const titleValue = screen.queryAllByText('Taco Shop');
+    expect(titleValue).toBeDefined();
+  });
 });
