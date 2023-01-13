@@ -71,25 +71,13 @@ let test_no_tacos_available =
         | Success _bad -> Test.failwith("Failed to prevent a purchase of 0 tacos")
         | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-        // match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Buy 5n) 0mutez with
-        // | Success _ -> false
-        // | Fail err ->
-        //     (match err with
-        //     | Rejected (msg, _) -> msg = Test.eval "NOT_ENOUGH_TACOS"
-        //     | _ -> false)
-
-//     // MAKE ENTRYPOINT
-//     // sender must be the admin
-//     let _ = Test.set_source user_address in
-//     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make initial_tacos) 0mutez with
-//         | Success _ -> false
-//         | Fail err ->
-//             (match err with
-//             | Rejected (msg, _) -> msg = Test.eval "NOT_ALLOWED"
-//             | _ -> false))
-//         |> assert
-//     in
+let test_only_admin_can_make_tacos =
+    let _ = Test.set_source user_address in
+    let addr,_,_ = Test.originate main initial_storage 0tez in // N.B. originates as user_address
+    match Test.transfer_to_contract (to_contract addr) (Make initial_tacos) 0mutez with
+        | Fail (Rejected(msg,_ok)) -> msg = Test.eval "NOT_ALLOWED" // TODO Improve failure message
+        | Success _bad -> Test.failwith("Failed to prevent a user from making tacos")
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
 //     let _ = Test.set_source admin_address in
 //     let _ =
