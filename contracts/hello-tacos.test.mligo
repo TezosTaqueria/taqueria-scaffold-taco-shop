@@ -41,14 +41,14 @@ let test_cannot_buy_more_tacos_than_available =
           | Fail (Rejected(msg,_)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
           | Fail _ -> Test.failwith "Failed to call Buy entrypoint"
 
-//     // passing with a smaller quantity
-//     let tacos_to_buy = storage.available_tacos / 2n in
-//     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Buy tacos_to_buy) 0mutez with
-//         | Success _ -> true
-//         | Fail _ -> false)
-//         |> assert
-//     in
+let test_can_buy_at_least_half_the_available_tacos =
+    let addr,_,_ = Test.originate main initial_storage 0tez in
+    let storage = storage_at addr in
+    let tacos_to_buy = storage.available_tacos / 2n in
+    match Test.transfer_to_contract (to_contract addr) (Buy tacos_to_buy) 0mutez with
+        | Success _ -> true
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
+
 //     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
 //     let _ = assert (storage.available_tacos = tacos_to_buy) in
 
