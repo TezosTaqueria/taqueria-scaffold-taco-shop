@@ -24,6 +24,7 @@ let initial_storage = {
     admin = admin_address;
 }
 
+// rename to contract_at
 let to_contract(address) = Test.to_contract address
 let storage_at(address) = Test.get_storage(address)
 
@@ -39,7 +40,7 @@ let test_cannot_buy_more_tacos_than_available =
     let too_many_tacos = storage.available_tacos + 1n in
     let addr,_,_ = Test.originate main initial_storage 0tez in
     match Test.transfer_to_contract (to_contract addr) (Buy too_many_tacos) 0mutez with
-        | Fail (Rejected(msg,_good)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
+        | Fail (Rejected(msg,_ok)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
         | Success _bad -> Test.failwith("Failed to prevent purchasing too many tacos")
         | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
@@ -48,19 +49,18 @@ let test_can_buy_at_least_half_the_available_tacos =
     let storage = storage_at addr in
     let tacos_to_buy = storage.available_tacos / 2n in
     match Test.transfer_to_contract (to_contract addr) (Buy tacos_to_buy) 0mutez with
-        | Success _ -> true
+        | Success _ok -> true
         | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-//     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
-//     let _ = assert (storage.available_tacos = tacos_to_buy) in
+let test_can_buy_all_remaining_tacos =
+    let addr,_,_ = Test.originate main initial_storage 0tez in
+    let storage = storage_at addr in
+    let number_of_available_tacos = storage.available_tacos in
+    let _ensure_nonzero_tacos_available = assert (number_of_available_tacos > 0n) in
+    match Test.transfer_to_contract (to_contract addr) (Buy number_of_available_tacos) 0mutez with
+        | Success _ok -> true
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-//     // passing with the same quantity
-//     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Buy tacos_to_buy) 0mutez with
-//         | Success _ -> true
-//         | Fail _ -> false)
-//         |> assert
-//     in
 //     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
 //     let _ = assert (storage.available_tacos = 0n) in
 
