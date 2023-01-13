@@ -61,19 +61,22 @@ let test_can_buy_all_remaining_tacos =
         | Success _ok -> true
         | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-//     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
-//     let _ = assert (storage.available_tacos = 0n) in
+let test_no_tacos_available =
+    let no_tacos_available = { initial_storage with available_tacos = 0n } in
+    let addr,_,_ = Test.originate main no_tacos_available 0tez in
+    let storage = storage_at addr in
+    let _verify_no_tacos_available = assert (storage.available_tacos = 0n) in
+    match Test.transfer_to_contract (to_contract addr) (Buy 1n) 0mutez with
+        | Fail (Rejected(msg,_ok)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
+        | Success _bad -> Test.failwith("Failed to prevent a purchase of 0 tacos")
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-//     // testing with a zero value in storage
-//     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Buy 5n) 0mutez with
-//         | Success _ -> false
-//         | Fail err ->
-//             (match err with
-//             | Rejected (msg, _) -> msg = Test.eval "NOT_ENOUGH_TACOS"
-//             | _ -> false))
-//         |> assert
-//     in
+        // match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Buy 5n) 0mutez with
+        // | Success _ -> false
+        // | Fail err ->
+        //     (match err with
+        //     | Rejected (msg, _) -> msg = Test.eval "NOT_ENOUGH_TACOS"
+        //     | _ -> false)
 
 //     // MAKE ENTRYPOINT
 //     // sender must be the admin
