@@ -79,12 +79,20 @@ let test_only_admin_can_make_tacos =
         | Success _bad -> Test.failwith("Failed to prevent a user from making tacos")
         | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
-//     let _ = Test.set_source admin_address in
-//     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make initial_tacos) 0mutez with
-//         | Success _ -> true
-//         | Fail _ -> false)
-//         |> assert
+let test_can_make_tacos =
+    let _ = Test.set_source admin_address in // Strictly unnecessary; just being explicit
+    let addr,_,_ = Test.originate main initial_storage 0tez in
+    let storage = storage_at addr in
+    let _ = assert (storage.available_tacos = initial_tacos) in
+    let _add_42_tacos =
+    (match Test.transfer_to_contract (to_contract addr) (Make 42n) 0mutez with
+        | Success _ -> true
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)) in
+    // Refresh storage after adding tacos
+    let storage = storage_at addr in
+    assert(storage.available_tacos = initial_tacos + 42n)
+
+
 //     in
 //     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
 //     let _ = assert (storage.available_tacos = initial_tacos) in
