@@ -10,7 +10,8 @@
     "setup:taqueria": "npm install && taq init",
     "setup:app": "cd ./app && npm install",
     "start:app": "cd app && npm run start",
-    "test": "jest"
+    "test": "jest",
+    "clear-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null"
   },
   "repository": {
     "type": "git",
@@ -44,6 +45,7 @@
   "main": "index.js",
   "dependencies": {
     "@taqueria/plugin-contract-types": "file:../taqueria/taqueria-plugin-contract-types",
+    "@taqueria/plugin-core": "file:../taqueria/taqueria-plugin-core",
     "@taqueria/toolkit": "^0.24.2",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
@@ -122,3 +124,4 @@
     "testEnvironment": "jsdom"
   }
 }
+
