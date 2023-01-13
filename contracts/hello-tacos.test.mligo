@@ -17,8 +17,10 @@ let admin_address = Test.nth_bootstrap_account 1
 let user_address = Test.nth_bootstrap_account 2
 let _set_source_to_admin = Test.set_source admin_address
 
+let initial_tacos: nat = 50n
+
 let initial_storage = {
-    available_tacos = 50n;
+    available_tacos = initial_tacos;
     admin = admin_address;
 }
 
@@ -28,7 +30,7 @@ let storage_at(address) = Test.get_storage(address)
 let test_initial_contract_state =
     let addr,_,_ = Test.originate main initial_storage 0tez in
     let storage = storage_at addr in
-    let _ = assert (storage.available_tacos = 50n) in
+    let _ = assert (storage.available_tacos = initial_tacos) in
     assert (storage.admin = admin_address)
 
 let test_cannot_buy_more_tacos_than_available =
@@ -37,9 +39,9 @@ let test_cannot_buy_more_tacos_than_available =
     let too_many_tacos = storage.available_tacos + 1n in
     let addr,_,_ = Test.originate main initial_storage 0tez in
     match Test.transfer_to_contract (to_contract addr) (Buy too_many_tacos) 0mutez with
-          | Success _ -> Test.failwith("Failed to prevent purchasing too many tacos")
-          | Fail (Rejected(msg,_)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
-          | Fail _ -> Test.failwith "Failed to call Buy entrypoint"
+        | Fail (Rejected(msg,_good)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
+        | Success _bad -> Test.failwith("Failed to prevent purchasing too many tacos")
+        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
 
 let test_can_buy_at_least_half_the_available_tacos =
     let addr,_,_ = Test.originate main initial_storage 0tez in
@@ -77,7 +79,7 @@ let test_can_buy_at_least_half_the_available_tacos =
 //     // sender must be the admin
 //     let _ = Test.set_source user_address in
 //     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make 50n) 0mutez with
+//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make initial_tacos) 0mutez with
 //         | Success _ -> false
 //         | Fail err ->
 //             (match err with
@@ -88,11 +90,11 @@ let test_can_buy_at_least_half_the_available_tacos =
 
 //     let _ = Test.set_source admin_address in
 //     let _ =
-//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make 50n) 0mutez with
+//         (match Test.transfer_to_contract (Test.to_contract contract_typed_addr) (Make initial_tacos) 0mutez with
 //         | Success _ -> true
 //         | Fail _ -> false)
 //         |> assert
 //     in
 //     let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
-//     let _ = assert (storage.available_tacos = 50n) in
+//     let _ = assert (storage.available_tacos = initial_tacos) in
 //     ()
