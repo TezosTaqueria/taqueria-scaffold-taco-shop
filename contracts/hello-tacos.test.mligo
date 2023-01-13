@@ -8,6 +8,7 @@
 *)
 
 #include "./_schema.mligo"
+#include "./hello-tacos.mligo"
 
 let _print_header = Test.println("Testing hello-taco.mligo....")
 
@@ -22,9 +23,8 @@ let test_initial_storage =
         available_tacos = 50n;
         admin           = admin_address;
     } in
-    let contract_addr, _, _ = Test.originate_from_file "./hello-tacos.mligo" "main" [] (Test.eval initial_storage) 0tez in
-    // let contract_typed_addr: (parameter, storage) typed_address = Test.cast_address contract_addr in
-    let storage: storage = Test.get_storage_of_address contract_addr |> Test.decompile in
+    let contract_addr, _, _ = Test.originate main initial_storage 0tez in
+    let storage: storage = Test.get_storage contract_addr in
     let _ = assert (storage.available_tacos = 50n) in
     assert (storage.admin = admin_address)
 
