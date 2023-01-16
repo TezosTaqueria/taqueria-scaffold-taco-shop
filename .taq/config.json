@@ -46,7 +46,7 @@
         "development": {
             "type": "flextesa",
             "label": "Local Tezos Sandbox",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
+            "protocol": "PtLimaPtLMwfNinJi9rCfDPWea8dFgTZ1MeJ9f1m2SRic6ayiwW"
         },
         "testing": {
             "type": "simple",
@@ -55,10 +55,6 @@
         }
     },
     "plugins": [
-        {
-            "type": "npm",
-            "name": "@taqueria/plugin-ligo"
-        },
         {
             "type": "npm",
             "name": "@taqueria/plugin-flextesa"
@@ -70,6 +66,10 @@
         {
             "type": "npm",
             "name": "@taqueria/plugin-jest"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-ligo"
         }
     ]
 }
