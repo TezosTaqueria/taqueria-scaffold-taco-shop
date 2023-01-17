@@ -29,57 +29,45 @@
 */
 import { TezosToolkit } from '@taquito/taquito';
 import { InMemorySigner } from '@taquito/signer';
-//import getPort from 'get-port';
-
-// Flextesa sandbox, a.k.a. local blockchain
-const tezos = new TezosToolkit('http://localhost:20000/');
-
-const log = (s: string) => console.log(s);
-const err = (s: string) => console.error(s);
-
-// The admin is alice: as owner, only she can Make tacos.
-const alice = 'tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb';
-const alice_sk = 'edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq';
-//const admin = alice;
-
-// The normal user is joe: he can Buy, but not Make, tacos
-const joe = "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB";
-const joe_sk = 'edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2';
-//const user = joe;
-
-// const FLEXTESA_PORT = 20000;
+import { log, warn, err } from './test-helpers';
 
 describe('Taqueria integration tests', () => {
 
+    // Flextesa sandbox, a.k.a. local blockchain
+    const FLEXTESA_PORT = 20000;
+    const tezos = new TezosToolkit(`http://localhost:${FLEXTESA_PORT}/`);
+
+    // The admin is alice: as owner, only she can Make tacos.
+    const alice = 'tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb';
+    const alice_sk = 'edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq';
+    //const admin = alice;
+
+    // The normal user is joe: he can Buy, but not Make, tacos
+    const joe = "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB";
+    const joe_sk = 'edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2';
+    //const user = joe;
+
+    let admin_signer;
+
     beforeAll(async () => {
-        log("TODO Verify that Flextesa is active");
-        // console.log(await getPort({ port: FLEXTESA_PORT }));
-        const admin_signer = await InMemorySigner.fromSecretKey(alice_sk)
+        warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
+        admin_signer = await InMemorySigner.fromSecretKey(alice_sk);
+        tezos.setSignerProvider(admin_signer);
         const pkh = await admin_signer.publicKeyHash();
-        log(`Admin publicKeyHash is ${pkh}`);
+        expect(pkh).toEqual(alice);
+        log(`Admin alice publicKeyHash is the expected ${pkh}`);
     });
 
-    test("Placeholder", () => {
+    test("Sanity check", () => {
         expect(1).toEqual(1);
+        err('Calling err in a test is ok!: it just prints to stderr');
     });
 
- /*    test("Test non-zero balance for originating address", () => {
-        tezos.tz
-            .getBalance('tz1h3rQ8wBxFd8L9B3d7Jhaawu6Z568XU3xY')
-            .then((balance) => log(`${balance.toNumber() / 1000000} ꜩ`))
-            .catch((error) => err(JSON.stringify(error)));
-    });
-
-    test("Can get a handle to the deployed contract on Ghostnet", () => {
-        // See https://tezostaquito.io/docs/smartcontracts for more information
-        //const tezos = new TezosToolkit('https://rpc.ghostnet.teztnets.xyz');
-        tezos.contract
-            .at('KT1GJ5dUyHiaj7Uuc8gqfsbdv5tTbEH3fiRP')
-            .then((c) => {
-                let methods = c.parameterSchema.ExtractSignatures();
-                log(JSON.stringify(methods, null, 2));
-            })
-            .catch((error) => err(`Error: ${error}`));
-    });
-    */
+    // test('Admin has funds for originate operation', async () => {
+    //     await tezos.tz
+    //         .getBalance(alice)
+    //         .then((balance) => log(`${balance.toNumber() / 1000000} ꜩ`))
+    //         .catch((error) => err(JSON.stringify(error)));
+    //     log('Admin has funds for originate - DONE');
+    // });
 } );
