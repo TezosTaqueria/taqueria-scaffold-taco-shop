@@ -100,9 +100,9 @@ describe('Taqueria integration tests', () => {
         await tezos.tz
             .getBalance(alice)
             .then((balance) => {
-                const arbitraryThreshold = 100; // enough for our purposes
-                expect(balance).toBeGreaterThan(arbitraryThreshold)
                 log(`alice has ${balance} available`);
+                const arbitraryThreshold = 100; // enough for our purposes
+                expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
         log('Admin has funds test is DONE');
