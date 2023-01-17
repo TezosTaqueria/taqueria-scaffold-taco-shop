@@ -50,7 +50,9 @@ describe('Taqueria integration tests', () => {
     //const user = joe;
 
     // The hello-tacos contract is originated to the Flextesa sandbox on startup
-    const hello_tacos = 'KT19otbQ8ZAv2UVDj9ZfR6ohPhXC6VgYH54t';
+    //const hello_tacos = 'KT19otbQ8ZAv2UVDj9ZfR6ohPhXC6VgYH54t';
+    const hello_tacos = 'KT1TDeSDJTAHi2Qc9K1eEPYuiGYUYiV1qewA';
+
     const storageSchema = new Schema({ prim: 'nat' }); // number_of_tacos
 
     const stringify = (error) => JSON.stringify(error);
@@ -101,14 +103,26 @@ describe('Taqueria integration tests', () => {
             .getBalance(alice)
             .then((balance) => {
                 log(`alice has ${balance} available`);
-                const arbitraryThreshold = 100; // enough for our purposes
+                const arbitraryThreshold = 100; // enough to originate, buy and make tacos
                 expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
         log('Admin has funds test is DONE');
     }, TIME_OUT);
 
-     test('We can get a handle to the Contract', async () => {
+    test('User has funds for Buy operation', async () => {
+        await tezos.tz
+            .getBalance(joe)
+            .then((balance) => {
+                log(`joe has ${balance} available`);
+                const arbitraryThreshold = 10; // enough to buy tacos
+                expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
+            })
+            .catch((error) => err(`Error getting balance: ${stringify(error)}`));
+        log('User has funds to Buy tacos is DONE');
+    }, TIME_OUT);
+
+    test('We can get a handle to the Contract', async () => {
         await tezos.contract
             .at(hello_tacos)
             .then((c) => {
@@ -118,8 +132,26 @@ describe('Taqueria integration tests', () => {
             .catch((error) => err(error));
      }, TIME_OUT);
 
-    test.todo('Alice can Make(number_of_tacos)');
-    test.todo('Joe can Buy(number_of_tacos)');
+    test('Alice can Make(number_of_tacos)', () => {
+        tezos.contract
+            .at(hello_tacos)
+            .then((contract) => {
+                contract.methods.make(42);
+                // TODO Retrieve storage and verify we successfully made tacos
+            })
+            .catch((error) => console.log(`Error: ${error}`));
+    });
+    test('Joe can Buy(1) taco', () => {
+        // TODO Verify that we have more than one taco before proceeding
+        tezos.contract
+            .at(hello_tacos)
+            .then((contract) => {
+                contract.methods.buy(1);
+                // TODO Retrieve storage and verify we successfully bought 1 taco
+            })
+            .catch((error) => console.log(`Error: ${error}`));
+    });
+
     test.todo('Joe can Buy(all tacos)');
     test.todo('Joe can Buy(0 tacos)');
     test.todo('Alice can Buy(number_of_tacos)');
