@@ -40,7 +40,8 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "jest-environment-jsdom": "^29.3.1",
-    "react-test-renderer": "^18.2.0"
+    "react-test-renderer": "^18.2.0",
+    "ts-jest": "^29.0.5"
   },
   "main": "index.js",
   "dependencies": {
