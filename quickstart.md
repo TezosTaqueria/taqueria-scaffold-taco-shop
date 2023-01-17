@@ -7,19 +7,19 @@ What you will accomplish:
 - Initialize a new Taqueria project
 - Install plugins for LIGO, Flextesa, and Taquito
 - Compile a LIGO smart contract
-- Start a local Flextesa sandbox 
+- Start a local Flextesa sandbox
 - Originate the compiled smart contract to the sandbox
 
 ## Requirements
 
 To successfully use Taqueria, you must ensure that:
-- The Taqueria CLI v0.24.1 has been [installed](./installation.mdx) and is available in your `$PATH` 
-- Docker v0.8 or later is installed and currently running
-- Node.js v16.3 or later
+- The Taqueria CLI v0.24.2 has been [installed](./installation.mdx) and is available in your `$PATH`
+- Docker v20.10.22 or later is installed and running
+- Node.js v16.16.0 or later
 
 ## Starting a Taqueria Project
 
-To start using Taqueria on a project, the project directory must be initialized by Taqueria. This process creates a hidden directory `./.taq` inside the project directory that contains the configuration and state files required by Taqueria, and ensures the required directories `/contracts` and `/artifacts` have been created 
+To start using Taqueria on a project, the project directory must be initialized by Taqueria. This process creates a hidden directory `./.taq` inside the project directory that contains the configuration and state files required by Taqueria, and ensures the required directories `/contracts` and `/artifacts` have been created
 
 Taqueria provides the command `init` which will create a new directory with the correct structure and configuration. To create a new Taqueria project called `my-first-project`, run the command:
 ```shell
@@ -134,7 +134,7 @@ taq compile
 
 Taqueria will then output a list of contracts compiled, and the artifacts created:
 ```shell
-❯ taq compile                     
+❯ taq compile
 ┌────────────────┬──────────────────────┐
 │ Contract       │ Artifact             │
 ├────────────────┼──────────────────────┤
@@ -207,10 +207,10 @@ taq install @taqueria/plugin-taquito
 ```
 
 Next, you need to configure some values for origination:
-- The initial storage for the smart contract 
+- The initial storage for the smart contract
 - The name of the sandbox to target (by default it is pre-configured to the sandbox named `local`)
 :::note
-As the default configuration comes with the sandbox named `local` preconfigured, simply provide a value for the initial storage in the `"storage"` property 
+As the default configuration comes with the sandbox named `local` preconfigured, simply provide a value for the initial storage in the `"storage"` property
 :::
 
 To set these values in Taqueria, navigate to the file `./.taq/config.json` and locate the `"environment"` property. For the `counter.tz` contract, simply need to provide an integer value for the `counter.tz` file which looks like this:
