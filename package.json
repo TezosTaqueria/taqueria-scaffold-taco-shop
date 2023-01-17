@@ -10,8 +10,11 @@
     "setup:taqueria": "npm install && taq init",
     "setup:app": "cd ./app && npm install",
     "start:app": "cd app && npm run start",
-    "test": "jest",
-    "clear-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null"
+    "rm-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null",
+    "df-docker": "docker system df",
+    "test:unit": "taq test hello-tacos.test.mligo --plugin @taqueria/plugin-ligo",
+    "test:integration": "jest --verbose --noStackTrace --collectCoverage --detectOpenHandles -- tests/hello-tacos-integration.spec.ts",
+    "test:front-end": "jest --verbose --noStackTrace -- App.test.tsx"
   },
   "repository": {
     "type": "git",
