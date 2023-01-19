@@ -50,9 +50,7 @@ describe('Taqueria integration tests', () => {
     const joe_sk = 'edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2';
     //const user = joe;
 
-    // The hello-tacos contract is originated to the Flextesa sandbox on startup
-    // const hello_tacos = 'KT19otbQ8ZAv2UVDj9ZfR6ohPhXC6VgYH54t';
-    // const hello_tacos = 'KT1TDeSDJTAHi2Qc9K1eEPYuiGYUYiV1qewA';
+    // TODO Replace this with the address of the deployed contract on Flextesa
     const hello_tacos = 'KT1PC4AJRHMzsLL1S6Ry49GXRP64rFp5sP2h';
 
     // TODO Amalgamate into an immutable <contract,address> pair?
@@ -79,7 +77,6 @@ describe('Taqueria integration tests', () => {
     }
 
     const TEST_TIME_OUT = 5000;
-    const ADDRESS_LENGTH = 36;
 
     beforeAll(async () => {
         warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
@@ -88,8 +85,8 @@ describe('Taqueria integration tests', () => {
         const pkh = await admin_signer.publicKeyHash();
         expect(pkh).toEqual(alice);
         log(`Admin alice publicKeyHash is the expected ${pkh}`);
-        //await originateContract();
-        //log(`beforeAll is DONE, address is ${address}`);
+        await originateContract();
+        log(`beforeAll is DONE, address is ${address}`);
     }, TEST_TIME_OUT);
 
     test('We can see the expected methods in the hello_tacos Contract', async () => {
@@ -108,9 +105,8 @@ describe('Taqueria integration tests', () => {
         const storage: Storage | undefined = await contract?.storage();
          if (storage) {
              log(`Admin is ${storage.admin} and available_tacos is ${storage.available_tacos}`);
-             expect(storage.admin).toHaveLength(ADDRESS_LENGTH);
              expect(storage.admin).toMatch(/tz[1-3][1-9A-HJ-NP-Za-km-z]{33}/);
-             expect(storage.available_tacos.toNumber()).toBeGreaterThan(0);
+             expect(storage.available_tacos.toNumber()).toBeGreaterThanOrEqual(0);
         }
         !storage && fail('Could not read Contract storage');
     }),
@@ -139,28 +135,42 @@ describe('Taqueria integration tests', () => {
         log('User has funds to Buy tacos is DONE');
     }, TEST_TIME_OUT);
 
-    test('Alice can Make(number_of_tacos)', () => {
+    async function taco_count(): Promise<number> {
+        const contract = await tezos.wallet.at(hello_tacos);
+        const storage: Storage | undefined = await contract?.storage();
+        !storage && fail('Could not read Contract storage');
+        return storage!.available_tacos.toNumber();
+    }
+
+    test('Alice can Make(42) tacos', async () => {
+        const taco_count_before: number = await taco_count();
+        const TACOS_TO_MAKE = 42;
         tezos.contract
             .at(hello_tacos)
             .then((contract) => {
-                contract.methods.make(42).send();
-                // TODO Retrieve storage and verify we successfully made tacos
+                contract.methods.make(TACOS_TO_MAKE).send();
             })
             .catch((error) => console.log(`Error: ${error}`));
+        const taco_count_after: number = await taco_count();
+        expect(taco_count_before + TACOS_TO_MAKE).toEqual(taco_count_after);
     });
-    /*
-    test('Joe can Buy(1) taco', () => {
-        // TODO Verify that we have more than one taco before proceeding
+
+    test('Joe can Buy(1) taco', async () => {
+        const taco_count_before: number = await taco_count();
+        // Assert precondition
+        expect(taco_count_before).toBeGreaterThan(0);
         tezos.contract
             .at(hello_tacos)
             .then((contract) => {
-                contract.methods.buy(1);
-                // TODO Retrieve storage and verify we successfully bought 1 taco
+                contract.methods.buy(1).send();
             })
             .catch((error) => console.log(`Error: ${error}`));
+        // Assert storage was updated
+        const taco_count_after = await taco_count();
+        expect(taco_count_after).toBe(taco_count_before - 1);
     });
     test.todo('Joe can Buy(all tacos)');
     test.todo('Joe can Buy(0 tacos)');
     test.todo('Alice can Buy(number_of_tacos)');
     test.todo('Joe can Buy(all), Alice can Make(more), and Joe can Buy(some)');
- */});
+});
