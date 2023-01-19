@@ -137,3 +137,5 @@ dist
 artifacts
 .taq/*-state.json
 node_modules/
+.taq/config.*.json
+**/*.bkup
