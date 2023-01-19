@@ -55,7 +55,7 @@ describe('Taqueria integration tests', () => {
 
     // TODO Amalgamate into an immutable <contract,address> pair?
     let address: string;
-
+/*
     async function originateContract() {
         tezos.contract
             .originate({
@@ -75,8 +75,27 @@ describe('Taqueria integration tests', () => {
             })
             .catch((error) => err(`Error originating contract: ${error}`));
     }
-
+*/
     const TEST_TIME_OUT = 5000;
+
+    // Helper
+    async function taco_count(): Promise<number> {
+        const contract = await tezos.wallet.at(hello_tacos);
+        const storage: Storage | undefined = await contract?.storage();
+        !storage && fail('Could not read Contract storage');
+        return storage!.available_tacos.toNumber();
+    }
+
+    // Helper
+    async function make_tacos(count?: number): Promise<number> {
+        tezos.contract
+            .at(hello_tacos)
+            .then((contract) => {
+                contract.methods.make(count ?? TACOS_TO_MAKE).send();
+            })
+            .catch((error) => console.log(`Error: ${error}`));
+        return await taco_count();
+    }
 
     beforeAll(async () => {
         warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
@@ -85,7 +104,7 @@ describe('Taqueria integration tests', () => {
         const pkh = await admin_signer.publicKeyHash();
         expect(pkh).toEqual(alice);
         log(`Admin alice publicKeyHash is the expected ${pkh}`);
-        await originateContract();
+        // await originateContract(); // Try dynamically so we get an idempotent setup?
         log(`beforeAll is DONE, address is ${address}`);
     }, TEST_TIME_OUT);
 
@@ -135,27 +154,23 @@ describe('Taqueria integration tests', () => {
         log('User has funds to Buy tacos is DONE');
     }, TEST_TIME_OUT);
 
-    async function taco_count(): Promise<number> {
-        const contract = await tezos.wallet.at(hello_tacos);
-        const storage: Storage | undefined = await contract?.storage();
-        !storage && fail('Could not read Contract storage');
-        return storage!.available_tacos.toNumber();
-    }
-
-    test('Alice can Make(42) tacos', async () => {
-        const taco_count_before: number = await taco_count();
-        const TACOS_TO_MAKE = 42;
+    const TACOS_TO_MAKE = 42;
+    test(`Admin can Make ${TACOS_TO_MAKE} tacos`, async () => {
+        const taco_count_before = await taco_count();
+        log(`taco_count_before: ${taco_count_before}`);
         tezos.contract
             .at(hello_tacos)
             .then((contract) => {
+                // TODO How do we set sender? How do we validate only admin/sender can Make()?
                 contract.methods.make(TACOS_TO_MAKE).send();
             })
             .catch((error) => console.log(`Error: ${error}`));
-        const taco_count_after: number = await taco_count();
-        expect(taco_count_before + TACOS_TO_MAKE).toEqual(taco_count_after);
+        const taco_count_after = await taco_count();
+        log(`taco_count_after: ${taco_count_after}`);
+        expect(taco_count_after).toEqual(taco_count_before + TACOS_TO_MAKE);
     });
 
-    test('Joe can Buy(1) taco', async () => {
+    test('Can Buy 1 taco', async () => {
         const taco_count_before: number = await taco_count();
         // Assert precondition
         expect(taco_count_before).toBeGreaterThan(0);
@@ -169,8 +184,37 @@ describe('Taqueria integration tests', () => {
         const taco_count_after = await taco_count();
         expect(taco_count_after).toBe(taco_count_before - 1);
     });
-    test.todo('Joe can Buy(all tacos)');
-    test.todo('Joe can Buy(0 tacos)');
-    test.todo('Alice can Buy(number_of_tacos)');
+
+    test('Can Buy all tacos', async () => {
+        const taco_count_before: number = await taco_count();
+        // Assert precondition
+        expect(taco_count_before).toBeGreaterThan(0);
+        tezos.contract
+            .at(hello_tacos)
+            .then((contract) => {
+                contract.methods.buy(taco_count_before).send();
+            })
+            .catch((error) => console.log(`Error: ${error}`));
+        // Assert storage was updated
+        const taco_count_after = await taco_count();
+        expect(taco_count_after).toBe(0);
+    });
+
+    test('Can Buy 0 tacos', async () => {
+        await make_tacos(TACOS_TO_MAKE);
+        const taco_count_before: number = await taco_count();
+        expect(taco_count_before).toBeGreaterThan(0);
+        tezos.contract
+            .at(hello_tacos)
+            .then((contract) => {
+                contract.methods.buy(0).send();
+            })
+            .catch((error) => console.log(`Error: ${error}`));
+        const taco_count_after = await taco_count();
+        expect(taco_count_after).toBe(taco_count_before);
+    });
+
+    // TODO Finally, test a short round-trip
     test.todo('Joe can Buy(all), Alice can Make(more), and Joe can Buy(some)');
+    test.todo('Check that admin can also buy tacos :shrug:');
 });
