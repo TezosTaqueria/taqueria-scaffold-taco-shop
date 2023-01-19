@@ -32,6 +32,7 @@ import { InMemorySigner } from '@taquito/signer';
 import { log, warn, err, stringify } from './test-helpers';
 import  contract_json from './../contracts/contract.json';
 import BigNumber from 'bignumber.js';
+import type { Storage } from '../app/src/model';
 
 describe('Taqueria integration tests', () => {
 
@@ -77,7 +78,8 @@ describe('Taqueria integration tests', () => {
             .catch((error) => err(`Error originating contract: ${error}`));
     }
 
-    const TIME_OUT = 5000;
+    const TEST_TIME_OUT = 5000;
+    const ADDRESS_LENGTH = 36;
 
     beforeAll(async () => {
         warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
@@ -88,27 +90,29 @@ describe('Taqueria integration tests', () => {
         log(`Admin alice publicKeyHash is the expected ${pkh}`);
         //await originateContract();
         //log(`beforeAll is DONE, address is ${address}`);
-    }, TIME_OUT);
+    }, TEST_TIME_OUT);
 
-    test("Sanity check jest setup: this should pass", () => {
-        expect(1).toEqual(1);
-        err('Calling err in a test is ok!: It just *prints* to stderr');
-    });
-
-    test('We can get a handle to the hello_tacos Contract', async () => {
+    test('We can see the expected methods in the hello_tacos Contract', async () => {
         await tezos.contract
             .at(hello_tacos)
             .then((c) => {
-                let methods = c.parameterSchema.ExtractSignatures();
-                log(JSON.stringify(methods, null, 2));
+                let raw = JSON.stringify(c.parameterSchema.ExtractSignatures());
+                expect(raw.includes("make"));
+                expect(raw.includes("buy"));
             })
             .catch((error) => err(error));
-    }, TIME_OUT);
+    }, TEST_TIME_OUT);
 
     test('We can read the contract storage', async () => {
-      const contract = await tezos.wallet.at(hello_tacos);
-      const storage: Storage | undefined = await contract?.storage();
-      storage && log(stringify(storage));//  || fail("Could not read Contract storage");
+        const contract = await tezos.wallet.at(hello_tacos);
+        const storage: Storage | undefined = await contract?.storage();
+         if (storage) {
+             log(`Admin is ${storage.admin} and available_tacos is ${storage.available_tacos}`);
+             expect(storage.admin).toHaveLength(ADDRESS_LENGTH);
+             expect(storage.admin).toMatch(/tz[1-3][1-9A-HJ-NP-Za-km-z]{33}/);
+             expect(storage.available_tacos.toNumber()).toBeGreaterThan(0);
+        }
+        !storage && fail('Could not read Contract storage');
     }),
 
     test('Admin has funds for originate, Make operations', async () => {
@@ -121,7 +125,7 @@ describe('Taqueria integration tests', () => {
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
         log('Admin has funds test is DONE');
-    }, TIME_OUT);
+    }, TEST_TIME_OUT);
 
     test('User has funds for Buy operation', async () => {
         await tezos.tz
@@ -133,7 +137,7 @@ describe('Taqueria integration tests', () => {
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
         log('User has funds to Buy tacos is DONE');
-    }, TIME_OUT);
+    }, TEST_TIME_OUT);
 
     test('Alice can Make(number_of_tacos)', () => {
         tezos.contract
