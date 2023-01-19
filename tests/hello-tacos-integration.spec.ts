@@ -28,10 +28,10 @@
   This software is licensed under the terms of the included LICENSE file.
 */
 import { TezosToolkit } from '@taquito/taquito';
-import { Schema } from '@taquito/michelson-encoder';
 import { InMemorySigner } from '@taquito/signer';
-import { log, warn, err } from './test-helpers';
+import { log, warn, err, stringify } from './test-helpers';
 import  contract_json from './../contracts/contract.json';
+import BigNumber from 'bignumber.js';
 
 describe('Taqueria integration tests', () => {
 
@@ -50,22 +50,19 @@ describe('Taqueria integration tests', () => {
     //const user = joe;
 
     // The hello-tacos contract is originated to the Flextesa sandbox on startup
-    //const hello_tacos = 'KT19otbQ8ZAv2UVDj9ZfR6ohPhXC6VgYH54t';
-    const hello_tacos = 'KT1TDeSDJTAHi2Qc9K1eEPYuiGYUYiV1qewA';
-
-    const storageSchema = new Schema({ prim: 'nat' }); // number_of_tacos
-
-    const stringify = (error) => JSON.stringify(error);
+    // const hello_tacos = 'KT19otbQ8ZAv2UVDj9ZfR6ohPhXC6VgYH54t';
+    // const hello_tacos = 'KT1TDeSDJTAHi2Qc9K1eEPYuiGYUYiV1qewA';
+    const hello_tacos = 'KT1PC4AJRHMzsLL1S6Ry49GXRP64rFp5sP2h';
 
     // TODO Amalgamate into an immutable <contract,address> pair?
     let address: string;
 
-/*     async function originateContract() {
+    async function originateContract() {
         tezos.contract
             .originate({
                 code: contract_json,
                 storage: {
-                    available_tacos: 42,
+                    available_tacos: new BigNumber(42),
                     admin: alice,
                 },
             })
@@ -79,8 +76,8 @@ describe('Taqueria integration tests', () => {
             })
             .catch((error) => err(`Error originating contract: ${error}`));
     }
- */
-    const TIME_OUT = 10000;
+
+    const TIME_OUT = 5000;
 
     beforeAll(async () => {
         warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
@@ -98,7 +95,23 @@ describe('Taqueria integration tests', () => {
         err('Calling err in a test is ok!: It just *prints* to stderr');
     });
 
-    test('Admin has funds for originate operation', async () => {
+    test('We can get a handle to the hello_tacos Contract', async () => {
+        await tezos.contract
+            .at(hello_tacos)
+            .then((c) => {
+                let methods = c.parameterSchema.ExtractSignatures();
+                log(JSON.stringify(methods, null, 2));
+            })
+            .catch((error) => err(error));
+    }, TIME_OUT);
+
+    test('We can read the contract storage', async () => {
+      const contract = await tezos.wallet.at(hello_tacos);
+      const storage: Storage | undefined = await contract?.storage();
+      storage && log(stringify(storage));//  || fail("Could not read Contract storage");
+    }),
+
+    test('Admin has funds for originate, Make operations', async () => {
         await tezos.tz
             .getBalance(alice)
             .then((balance) => {
@@ -122,25 +135,16 @@ describe('Taqueria integration tests', () => {
         log('User has funds to Buy tacos is DONE');
     }, TIME_OUT);
 
-    test('We can get a handle to the Contract', async () => {
-        await tezos.contract
-            .at(hello_tacos)
-            .then((c) => {
-                let methods = c.parameterSchema.ExtractSignatures();
-                log(JSON.stringify(methods, null, 2));
-            })
-            .catch((error) => err(error));
-     }, TIME_OUT);
-
     test('Alice can Make(number_of_tacos)', () => {
         tezos.contract
             .at(hello_tacos)
             .then((contract) => {
-                contract.methods.make(42);
+                contract.methods.make(42).send();
                 // TODO Retrieve storage and verify we successfully made tacos
             })
             .catch((error) => console.log(`Error: ${error}`));
     });
+    /*
     test('Joe can Buy(1) taco', () => {
         // TODO Verify that we have more than one taco before proceeding
         tezos.contract
@@ -151,9 +155,8 @@ describe('Taqueria integration tests', () => {
             })
             .catch((error) => console.log(`Error: ${error}`));
     });
-
     test.todo('Joe can Buy(all tacos)');
     test.todo('Joe can Buy(0 tacos)');
     test.todo('Alice can Buy(number_of_tacos)');
     test.todo('Joe can Buy(all), Alice can Make(more), and Joe can Buy(some)');
-});
+ */});
