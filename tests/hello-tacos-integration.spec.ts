@@ -27,60 +27,43 @@
   Copyright (c) 2023 ECAD Labs. All rights reserved.
   This software is licensed under the terms of the included LICENSE file.
 */
+import BigNumber from 'bignumber.js';
 import { TezosToolkit } from '@taquito/taquito';
 import { InMemorySigner } from '@taquito/signer';
+import { RpcClient } from '@taquito/rpc';
 import { log, warn, err, stringify } from './test-helpers';
-import  contract_json from './../contracts/contract.json';
-import BigNumber from 'bignumber.js';
 import type { Storage } from '../app/src/model';
+
+// A JSON file containing metadata about the Flextesa sandbox / development environment
+import config from '../.taq/config.local.development.json';
 
 describe('Taqueria integration tests', () => {
 
     // Flextesa sandbox, a.k.a. local blockchain
     const FLEXTESA_PORT = 21000;
-    const tezos = new TezosToolkit(`http://localhost:${FLEXTESA_PORT}/`);
+    const FLEXTESA_URI = `http://localhost:${FLEXTESA_PORT}`;
 
     // The owner/originator/admin/chef is alice: only she can Make tacos
-    const alice = 'tz1VSUr8wwNhLAzempoch5d6hLRiTh8Cjcjb';
+    const alice = config.accounts.alice.publicKeyHash;
+    // We can't use config for this value, because there is a prefix in the key for technical reasons
     const alice_sk = 'edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq';
-    //const admin = alice;
 
     // A normal (i.e. non-admin) user is joe: he can Buy, but not Make, tacos
-    const joe = "tz1MVGjgD1YtAPwohsSfk8i3ZiT1yEGM2YXB";
+    const joe = config.accounts.joe.publicKeyHash;
     const joe_sk = 'edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2';
-    //const user = joe;
 
-    // TODO Replace this with the address of the deployed contract on Flextesa
-    const hello_tacos = 'KT1PC4AJRHMzsLL1S6Ry49GXRP64rFp5sP2h';
+    // Each time the contract is origanated to `development`, this value is dynamically updated
+    const hello_tacos = config.aliases['hello-tacos'].address;
 
-    // TODO Amalgamate into an immutable <contract,address> pair?
-    let address: string;
-/*
-    async function originateContract() {
-        tezos.contract
-            .originate({
-                code: contract_json,
-                storage: {
-                    available_tacos: new BigNumber(42),
-                    admin: alice,
-                },
-            })
-            .then((originationOp) => {
-                log(`Waiting for confirmation of origination for ${originationOp.contractAddress}...`);
-                return originationOp.contract();
-            })
-            .then((contract) => {
-                address = contract.address;
-                log(`Origination succeeded to ${address}`);
-            })
-            .catch((error) => err(`Error originating contract: ${error}`));
-    }
-*/
+    const tezos = new TezosToolkit(FLEXTESA_URI);
+    const admin_signer = new InMemorySigner(alice_sk);
+    tezos.setSignerProvider(admin_signer);
+
     const TEST_TIME_OUT = 5000;
 
     // Helper
     async function taco_count(): Promise<number> {
-        const contract = await tezos.wallet.at(hello_tacos);
+        const contract = await tezos.contract.at(hello_tacos);
         const storage: Storage | undefined = await contract?.storage();
         !storage && fail('Could not read Contract storage');
         return storage!.available_tacos.toNumber();
@@ -88,25 +71,23 @@ describe('Taqueria integration tests', () => {
 
     // Helper
     async function make_tacos(count?: number): Promise<number> {
-        tezos.contract
+        //log(getAliasAddress(config, "hello-tacos"));
+        await tezos.contract
             .at(hello_tacos)
-            .then((contract) => {
-                contract.methods.make(count ?? TACOS_TO_MAKE).send();
-            })
+            .then((contract) => contract.methods.make(count ?? TACOS_TO_MAKE).send())
+            .then((op) => op.confirmation())
             .catch((error) => console.log(`Error: ${error}`));
         return await taco_count();
     }
 
     beforeAll(async () => {
-        warn("TODO Verify that Flextesa is active, otherwise bark loudly and exit");
-        const admin_signer = await InMemorySigner.fromSecretKey(alice_sk);
-        tezos.setSignerProvider(admin_signer);
+        warn("TODO: Verify that Flextesa is active, otherwise bark loudly and exit");
         const pkh = await admin_signer.publicKeyHash();
         expect(pkh).toEqual(alice);
         log(`Admin alice publicKeyHash is the expected ${pkh}`);
-        // await originateContract(); // Try dynamically so we get an idempotent setup?
-        log(`beforeAll is DONE, address is ${address}`);
     }, TEST_TIME_OUT);
+
+    afterAll(async () => await make_tacos(TACOS_TO_MAKE));
 
     test('We can see the expected methods in the hello_tacos Contract', async () => {
         await tezos.contract
@@ -120,7 +101,7 @@ describe('Taqueria integration tests', () => {
     }, TEST_TIME_OUT);
 
     test('We can read the contract storage', async () => {
-        const contract = await tezos.wallet.at(hello_tacos);
+        const contract = await tezos.contract.at(hello_tacos);
         const storage: Storage | undefined = await contract?.storage();
          if (storage) {
              log(`Admin is ${storage.admin} and available_tacos is ${storage.available_tacos}`);
@@ -139,7 +120,6 @@ describe('Taqueria integration tests', () => {
                 expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
-        log('Admin has funds test is DONE');
     }, TEST_TIME_OUT);
 
     test('User has funds for Buy operation', async () => {
@@ -151,67 +131,77 @@ describe('Taqueria integration tests', () => {
                 expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
             .catch((error) => err(`Error getting balance: ${stringify(error)}`));
-        log('User has funds to Buy tacos is DONE');
     }, TEST_TIME_OUT);
 
     const TACOS_TO_MAKE = 42;
     test(`Admin can Make ${TACOS_TO_MAKE} tacos`, async () => {
         const taco_count_before = await taco_count();
         log(`taco_count_before: ${taco_count_before}`);
-        tezos.contract
+        await tezos.wallet
             .at(hello_tacos)
-            .then((contract) => {
-                // TODO How do we set sender? How do we validate only admin/sender can Make()?
-                contract.methods.make(TACOS_TO_MAKE).send();
-            })
+            // TODO How do we set sender? How do we validate only admin/sender can Make()?
+            .then((contract) => contract.methods.make(TACOS_TO_MAKE).send())
+            .then((op) => op.confirmation())
             .catch((error) => console.log(`Error: ${error}`));
-        const taco_count_after = await taco_count();
+        const taco_count_after: number = await taco_count();
         log(`taco_count_after: ${taco_count_after}`);
         expect(taco_count_after).toEqual(taco_count_before + TACOS_TO_MAKE);
     });
 
     test('Can Buy 1 taco', async () => {
-        const taco_count_before: number = await taco_count();
+        const taco_count_before = await taco_count();
         // Assert precondition
         expect(taco_count_before).toBeGreaterThan(0);
-        tezos.contract
+        await tezos.contract
             .at(hello_tacos)
-            .then((contract) => {
-                contract.methods.buy(1).send();
-            })
+            .then((contract) => contract.methods.buy(1).send())
+            .then((op) => op.confirmation())
             .catch((error) => console.log(`Error: ${error}`));
         // Assert storage was updated
         const taco_count_after = await taco_count();
         expect(taco_count_after).toBe(taco_count_before - 1);
     });
 
-    test('Can Buy all tacos', async () => {
+    test('Can Buy 0 tacos', async () => {
+        await make_tacos();
         const taco_count_before: number = await taco_count();
+        expect(taco_count_before).toBeGreaterThan(0);
+        await tezos.contract
+            .at(hello_tacos)
+            .then((contract) => contract.methods.buy(0).send())
+            .then((op) => op.confirmation())
+            .catch((error) => console.log(`Error: ${error}`));
+        const taco_count_after = await taco_count();
+        expect(taco_count_after).toBe(taco_count_before);
+    });
+
+    test('Can Buy all tacos', async () => {
+        const taco_count_before = await taco_count();
+        log(`TACO COUNT BEFORE: ${taco_count_before}`);
         // Assert precondition
         expect(taco_count_before).toBeGreaterThan(0);
-        tezos.contract
+        await tezos.contract
             .at(hello_tacos)
-            .then((contract) => {
-                contract.methods.buy(taco_count_before).send();
-            })
+            .then((contract) => contract.methods.buy(taco_count_before).send())
+            .then((op) => op.confirmation())
             .catch((error) => console.log(`Error: ${error}`));
         // Assert storage was updated
         const taco_count_after = await taco_count();
         expect(taco_count_after).toBe(0);
     });
 
-    test('Can Buy 0 tacos', async () => {
-        await make_tacos(TACOS_TO_MAKE);
-        const taco_count_before: number = await taco_count();
-        expect(taco_count_before).toBeGreaterThan(0);
-        tezos.contract
-            .at(hello_tacos)
-            .then((contract) => {
-                contract.methods.buy(0).send();
-            })
-            .catch((error) => console.log(`Error: ${error}`));
-        const taco_count_after = await taco_count();
-        expect(taco_count_after).toBe(taco_count_before);
+    // A lower-level way to interact with a Wallet
+    test('Get balance via RpcClient', async () => {
+        const client = new RpcClient(FLEXTESA_URI);
+        const balance = await client.getBalance(alice);
+        log(`Balance: ${balance}`);
+    });
+
+    // A lower-level way of interacting with a Contract
+    test('Get storage via RpcClient', async () => {
+        const client = new RpcClient(FLEXTESA_URI);
+        const storage = await client.getStorage(hello_tacos);
+        log(`Storage: ${stringify(storage)}`);
     });
 
     // TODO Finally, test a short round-trip
