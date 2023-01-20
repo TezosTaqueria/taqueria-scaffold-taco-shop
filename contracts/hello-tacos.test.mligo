@@ -9,8 +9,8 @@
   ** Good to Know **
 
   => There is no deployment to, or interaction with, any Tezos blockchain instance
-  => They test the logic of the contract, but not any kind of integration
-  => These tests are extremely fast, but isolated to the context of the contract
+  => These tests only exercise the logic of the contract: not any integration
+  => These tests are fast, but also isolated to the context of the contract
 
   ** Conventions **
 
