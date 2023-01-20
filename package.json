@@ -10,9 +10,12 @@
         "setup:taqueria": "npm install && taq init",
         "setup:app": "cd ./app && npm install",
         "start:app": "cd app && npm run start",
-        "rm-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null",
+        "start:sandbox": "taq start sandbox development",
+        "compile:contract": "taq compile hello-tacos.mligo",
         "df-docker": "docker system df",
+        "rm-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null",
         "test:unit": "taq test hello-tacos.test.mligo --plugin @taqueria/plugin-ligo",
+        "originate": "taq originate hello-tacos.tz -e development --sender alice",
         "test:integration": "jest --verbose --noStackTrace --collectCoverage --detectOpenHandles -- tests/hello-tacos-integration.spec.ts",
         "test:front-end": "jest --verbose --noStackTrace -- App.test.tsx"
     },
