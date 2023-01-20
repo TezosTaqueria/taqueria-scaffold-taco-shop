@@ -27,12 +27,11 @@
   Copyright (c) 2023 ECAD Labs. All rights reserved.
   This software is licensed under the terms of the included LICENSE file.
 */
-import BigNumber from 'bignumber.js';
-import { TezosToolkit } from '@taquito/taquito';
-import { InMemorySigner } from '@taquito/signer';
 import { RpcClient } from '@taquito/rpc';
-import { log, warn, err, stringify } from './test-helpers';
+import { InMemorySigner } from '@taquito/signer';
+import { TezosToolkit } from '@taquito/taquito';
 import type { Storage } from '../app/src/model';
+import { err, log, stringify, warn } from './test-helpers';
 
 // A JSON file containing metadata about the Flextesa sandbox / development environment
 import config from '../.taq/config.local.development.json';
@@ -50,7 +49,6 @@ describe('Taqueria integration tests', () => {
 
     // A normal (i.e. non-admin) user is joe: he can Buy, but not Make, tacos
     const joe = config.accounts.joe.publicKeyHash;
-    const joe_sk = 'edsk3Un2FU9Zeb4KEoATWdpAqcX5JArMUj2ew8S4SuzhPRDmGoqNx2';
 
     // Each time the contract is origanated to `development`, this value is dynamically updated
     const hello_tacos = config.aliases['hello-tacos'].address;
@@ -84,7 +82,7 @@ describe('Taqueria integration tests', () => {
         warn("TODO: Verify that Flextesa is active, otherwise bark loudly and exit");
         const pkh = await admin_signer.publicKeyHash();
         expect(pkh).toEqual(alice);
-        log(`Admin alice publicKeyHash is the expected ${pkh}`);
+        // log(`Admin alice publicKeyHash is the expected ${pkh}`);
     }, TEST_TIME_OUT);
 
     afterAll(async () => await make_tacos(TACOS_TO_MAKE));
@@ -104,7 +102,7 @@ describe('Taqueria integration tests', () => {
         const contract = await tezos.contract.at(hello_tacos);
         const storage: Storage | undefined = await contract?.storage();
          if (storage) {
-             log(`Admin is ${storage.admin} and available_tacos is ${storage.available_tacos}`);
+             // log(`Admin is ${storage.admin} and available_tacos is ${storage.available_tacos}`);
              expect(storage.admin).toMatch(/tz[1-3][1-9A-HJ-NP-Za-km-z]{33}/);
              expect(storage.available_tacos.toNumber()).toBeGreaterThanOrEqual(0);
         }
@@ -115,7 +113,7 @@ describe('Taqueria integration tests', () => {
         await tezos.tz
             .getBalance(alice)
             .then((balance) => {
-                log(`alice has ${balance} available`);
+                // log(`alice has ${balance} available`);
                 const arbitraryThreshold = 100; // enough to originate, buy and make tacos
                 expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
@@ -126,7 +124,7 @@ describe('Taqueria integration tests', () => {
         await tezos.tz
             .getBalance(joe)
             .then((balance) => {
-                log(`joe has ${balance} available`);
+                // log(`joe has ${balance} available`);
                 const arbitraryThreshold = 10; // enough to buy tacos
                 expect(balance.toNumber()).toBeGreaterThan(arbitraryThreshold)
             })
@@ -136,7 +134,7 @@ describe('Taqueria integration tests', () => {
     const TACOS_TO_MAKE = 42;
     test(`Admin can Make ${TACOS_TO_MAKE} tacos`, async () => {
         const taco_count_before = await taco_count();
-        log(`taco_count_before: ${taco_count_before}`);
+        // log(`taco_count_before: ${taco_count_before}`);
         await tezos.wallet
             .at(hello_tacos)
             // TODO How do we set sender? How do we validate only admin/sender can Make()?
@@ -144,7 +142,7 @@ describe('Taqueria integration tests', () => {
             .then((op) => op.confirmation())
             .catch((error) => console.log(`Error: ${error}`));
         const taco_count_after: number = await taco_count();
-        log(`taco_count_after: ${taco_count_after}`);
+        // log(`taco_count_after: ${taco_count_after}`);
         expect(taco_count_after).toEqual(taco_count_before + TACOS_TO_MAKE);
     });
 
@@ -177,7 +175,7 @@ describe('Taqueria integration tests', () => {
 
     test('Can Buy all tacos', async () => {
         const taco_count_before = await taco_count();
-        log(`TACO COUNT BEFORE: ${taco_count_before}`);
+        // log(`taco_count_before: ${taco_count_before}`);
         // Assert precondition
         expect(taco_count_before).toBeGreaterThan(0);
         await tezos.contract
