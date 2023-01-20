@@ -1,5 +1,10 @@
 /*
-  The integration tests in this module can be run with `$ npm run test:integration`.
+  The integration tests in this module can be run as follows:
+
+  * Start the Flextesa sandbox with `taq start sandbox development`
+  * Compile the contract with `taq compile hello-tacos.mligo`
+  * Originate (deploy) the contract with `taq originate hello-tacos.tz -e development --sender alice`
+  * Run the integration tests with `npm run test:integration`
 
   These tests verify interactions between the Dapp and Contract as deployed to the blockchain. They
   largely test the same functionality the Dapp uses, but outside of a web context.
@@ -44,7 +49,7 @@ describe('Taqueria integration tests', () => {
 
     // The owner/originator/admin/chef is alice: only she can Make tacos
     const alice = config.accounts.alice.publicKeyHash;
-    // We can't use config for this value, because there is a prefix in the key for technical reasons
+    // We can't use config directly for this: there is a prefix in the value, for technical reasons
     const alice_sk = 'edsk3QoqBuvdamxouPhin7swCvkQNgq4jP5KZPbwWNnwdZpSpJiEbq';
 
     // A normal (i.e. non-admin) user is joe: he can Buy, but not Make, tacos
@@ -95,7 +100,8 @@ describe('Taqueria integration tests', () => {
                 expect(raw.includes("make"));
                 expect(raw.includes("buy"));
             })
-            .catch((error) => err(error));
+            .catch((error) => err(`Error getting the contract: ${stringify(error)}.\n` +
+                '*** Did you "npm run originate:development"? ***'));
     }, TEST_TIME_OUT);
 
     test('We can read the contract storage', async () => {
