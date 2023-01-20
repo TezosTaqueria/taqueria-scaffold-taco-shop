@@ -41,7 +41,7 @@
             "hash": "032d8416859b5355056417ad1caee3bb56ae650247de1a8251096684753ebda6"
         }
     },
-    "environmentDefault": "testing",
+    "environmentDefault": "development",
     "environments": {
         "development": {
             "type": "flextesa",
@@ -51,8 +51,7 @@
         "testing": {
             "type": "simple",
             "label": "ghostnet",
-            "rpcUrl": "https://ghostnet.ecadinfra.com",
-            "protocol": ""
+            "rpcUrl": "https://ghostnet.ecadinfra.com"
         }
     },
     "plugins": [
