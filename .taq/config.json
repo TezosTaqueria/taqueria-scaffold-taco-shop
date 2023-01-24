@@ -46,6 +46,7 @@
         "development": {
             "type": "flextesa",
             "label": "Local Tezos Sandbox",
+            "rpcUrl": "http://172.17.0.1:20000",
             "protocol": "PtLimaPtLMwfNinJi9rCfDPWea8dFgTZ1MeJ9f1m2SRic6ayiwW"
         },
         "testing": {
