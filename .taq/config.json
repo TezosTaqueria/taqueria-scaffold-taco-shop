@@ -1,65 +1,87 @@
 {
+    "version": "v2",
     "language": "en",
-    "plugins": [
-        {
-            "name": "@taqueria/plugin-ligo",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-flextesa",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-taquito",
-            "type": "npm"
-        },
-        {
-            "name": "@taqueria/plugin-jest",
-            "type": "npm"
-        }
-    ],
-    "contractsDir": "contracts",
     "artifactsDir": "artifacts",
-    "network": {
-        "ghostnet": {
-            "label": "ghostnet",
-            "rpcUrl": "https://ghostnet.ecadinfra.com",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
-        }
-    },
-    "sandbox": {
-        "local-scaffold": {
-            "label": "Local Tezos Sandbox",
-            "rpcUrl": "http://localhost:21000",
-            "protocol": "PtKathmankSpLLDALzWw7CGD2j2MtyveTwboEYokqUCP4a1LxMg"
-        }
-    },
-    "environment": {
-        "default": "testing",
-        "development": {
-            "networks": [],
-            "sandboxes": [
-                "local-scaffold"
-            ],
-            "storage": {}
+    "contractsDir": "contracts",
+    "accounts": {
+        "bob": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
         },
-        "testing": {
-            "networks": [
-                "ghostnet"
-            ],
-            "sandboxes": [],
-            "aliases": {
-                "hello-tacos": {
-                    "address": "KT1LMNSCTCprDtuzAJ5GiAHNdC1r5q8qiZYc"
-                }
+        "alice": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
+        },
+        "john": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
+        },
+        "jane": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
+            }
+        },
+        "joe": {
+            "balance": {
+                "amount": "3_000_000_000",
+                "units": "mutez"
             }
         }
     },
-    "accounts": {
-        "bob": "3_000_000_000",
-        "alice": "3_000_000_000",
-        "john": "3_000_000_000",
-        "jane": "3_000_000_000",
-        "joe": "3_000_000_000"
-    }
+    "environmentDefault": "testing",
+    "environments": {
+        "development": {
+            "type": "flextesa",
+            "label": "Local Tezos Sandbox"
+        },
+        "testing": {
+            "type": "simple",
+            "label": "ghostnet",
+            "rpcUrl": "https://ghostnet.ecadinfra.com",
+            "contracts": {
+                "hello-tacos": {
+                    "address": "KT1VABCpYdHwVt4KQyadfLpNsJtpqzCgFvqJ"
+                }
+            },
+            "networkName": "ghostnet",
+            "accounts": {
+                "taqOperatorAccount": {
+                    "publicKey": "edpku75M92YKUfnXtgXAp15ToHATPWhqotdKLEcgjVDsWWor8ZMjge",
+                    "publicKeyHash": "tz1RENwgnqPSpYcP7qCjUdEQYN4JdgdnAERt",
+                    "privateKey": "edskRzxEMufesxjThqjXkRC5jtwQrJkyPhMt7sCc2MwPhftZLk9XjButF5nN8cVVtUdW4fFBDRsBJG2C6qm3AePieBt4SAxmpk",
+                    "mnemonic": "cake noble burger super confirm wasp ahead doll barrel museum endless hello"
+                }
+            }
+        },
+        "production": {
+            "type": "simple",
+            "label": "mainnet",
+            "rpcUrl": "https://mainnet.api.tez.ie"
+        }
+    },
+    "plugins": [
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-ligo"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-flextesa"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-taquito"
+        },
+        {
+            "type": "npm",
+            "name": "@taqueria/plugin-jest"
+        }
+    ]
 }

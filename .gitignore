@@ -135,3 +135,6 @@ dist
 
 # WebStorm configuration files
 .idea/
+
+# Local Taqueria Config Files
+.taq/config.local*

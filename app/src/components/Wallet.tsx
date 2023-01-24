@@ -15,7 +15,7 @@ const Wallet = ({
   connected: boolean;
 }) => {
   const [wallet, setWallet] = useState<BeaconWallet | undefined>(undefined);
-  const [userAddress, setUserAddress] = useState<string | undefined>(undefined);
+  const [_, setUserAddress] = useState<string | undefined>(undefined);
 
   const createWallet = (): BeaconWallet => {
     const walletOptions = {
