@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import type { TezosToolkit } from "@taquito/taquito";
-import { NetworkType } from "@airgap/beacon-sdk";
+import { NetworkType, Network } from "@airgap/beacon-sdk";
 
 const Wallet = ({
   Tezos,
-  rpcUrl,
+  network,
   setConnected,
   connected
 }: {
   Tezos: TezosToolkit | undefined;
-  rpcUrl: string;
+  network: Network;
   setConnected: (p: boolean) => void;
   connected: boolean;
 }) => {
@@ -20,7 +20,7 @@ const Wallet = ({
   const createWallet = (): BeaconWallet => {
     const walletOptions = {
       name: "Hello Tacos",
-      preferredNetwork: NetworkType.GHOSTNET
+      preferredNetwork: network.type
     }
     return new BeaconWallet(walletOptions);
   };
@@ -31,12 +31,7 @@ const Wallet = ({
 
     if (Tezos) {
       try {
-        await w.requestPermissions({
-          network: {
-            type: NetworkType.GHOSTNET,
-            rpcUrl
-          }
-        });
+        await w.requestPermissions({network});
         const userPkh = await w.getPKH();
         setUserAddress(userPkh);
         Tezos.setWalletProvider(wallet);

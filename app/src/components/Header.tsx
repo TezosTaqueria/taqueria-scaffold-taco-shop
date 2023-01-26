@@ -1,14 +1,15 @@
 import Wallet from "./Wallet";
 import type { TezosToolkit } from "@taquito/taquito";
+import {Network} from "@airgap/beacon-sdk"
 
 const Header = ({
   Tezos,
-  rpcUrl,
+  network,
   setConnected,
   connected
 }: {
   Tezos: TezosToolkit | undefined;
-  rpcUrl: string;
+  network: Network;
   setConnected: (p: boolean) => void;
   connected: boolean;
 }) => {
@@ -23,7 +24,7 @@ const Header = ({
       <div className="header__connection-status">
         <Wallet
           Tezos={Tezos}
-          rpcUrl={rpcUrl}
+          network={network}
           setConnected={setConnected}
           connected={connected}
         />

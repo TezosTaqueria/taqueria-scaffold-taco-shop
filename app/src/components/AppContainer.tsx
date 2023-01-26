@@ -1,4 +1,5 @@
 import { TezosToolkit } from "@taquito/taquito";
+import {Network} from "@airgap/beacon-sdk"
 import React from 'react'
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -7,7 +8,7 @@ import type {Storage} from "../model"
 
 type Props = {
     Tezos: TezosToolkit
-    rpcUrl: string
+    network: Network
     setConnected: (value: boolean) => void
     connected: boolean,
     contractStorage: Storage | undefined,
@@ -15,11 +16,11 @@ type Props = {
     contractAddress: string
 }
 
-const AppContainer = ({Tezos, rpcUrl, setConnected, connected, contractStorage, setContractStorage, contractAddress}: Props) => (
+const AppContainer = ({Tezos, network, setConnected, connected, contractStorage, setContractStorage, contractAddress}: Props) => (
     <div className="app">
       <Header
         Tezos={Tezos}
-        rpcUrl={rpcUrl}
+        network={network}
         setConnected={setConnected}
         connected={connected}
       ></Header>

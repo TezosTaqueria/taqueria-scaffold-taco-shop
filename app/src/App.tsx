@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { TezosToolkit } from "@taquito/taquito";
+import { NetworkType, Network} from "@airgap/beacon-sdk"
 import "./App.css";
 import "./styles/Header.css";
 import "./styles/Interface.css";
 import "./styles/Footer.css";
 import "./styles/Wallet.css";
-import { V2, getConfigV2, ConfigFileSetV2, isTaqError, TaqError} from "@taqueria/toolkit";
+import { V2, getConfigV2, ConfigFileSetV2, isTaqError, TaqError, Config} from "@taqueria/toolkit";
 import type {Storage} from "./model"
 import AppContainer from "./components/AppContainer"
 
@@ -15,9 +16,12 @@ type AppProps = {
   env: Record<string, string|undefined>
 }
 
+type Environment = ReturnType<typeof V2.getCurrentEnv>
+
 type Deps = {
   settings: ConfigFileSetV2,
-  Tezos: TezosToolkit
+  Tezos: TezosToolkit,
+  network: Network
 }
 
 function getContractAddress(contractName: string, deps: Deps) {
@@ -36,6 +40,28 @@ function getRpcUrl(deps: Deps) {
   return undefined
 }
 
+function getNetworkInfo(settings: ConfigFileSetV2): Network {
+  const env = V2.getCurrentEnv(settings)
+  if (!settings.config.environmentDefault) throw new TaqError("No default environment set. Please set `environmentDefault` in your .taq/config.json file.")
+  if (!env['rpcUrl']) throw new TaqError(`No RPC Url set for the environment called ${settings.config.environmentDefault}`)
+  const rpcUrl = env['rpcUrl'] as string
+  if (env.type === 'flextesa') {
+    return {
+      type: NetworkType.CUSTOM,
+      name: settings.config.environmentDefault,
+      rpcUrl
+    }
+  }
+  else if (env.type === 'simple') {
+    return {
+        type: rpcUrl.includes('ghost') ? NetworkType.GHOSTNET : NetworkType.MAINNET,
+        name: settings.config.environmentDefault,
+        rpcUrl
+    }
+  }
+  throw new TaqError('This app only supports environments of type "flextesa" or "simple".')
+}
+
 function App(props: AppProps) {
   const [deps, setDeps] = useState<Deps|undefined>(undefined)
   const contractAddress = deps ? getContractAddress(CONTRACT_NAME, deps) : undefined
@@ -51,18 +77,13 @@ function App(props: AppProps) {
       if (!deps) {
         try {
           const settings = await getConfigV2(props.env, 'REACT_APP_')
-          const env = V2.getCurrentEnv(settings)
-
-          // This project assumes that only one of two environment types
-          // are used, flextesa or simple, both of which have an RPC url
-          const rpcUrl = env['rpcUrl']
-          if (rpcUrl) {
-            setDeps(_ => ({
-              settings,
-              Tezos: new TezosToolkit(String(rpcUrl))
-            })) 
-          }
-          else throw new TaqError("No RPC url has been configured for your environment. Check your config and try again. Note, at this time, this app only supports the following environment types: simple, flextesa")
+          const network = getNetworkInfo(settings)
+          const Tezos = new TezosToolkit(network.rpcUrl!)
+          setDeps({
+            network,
+            settings,
+            Tezos
+          })
         }
         catch (err) {
           alert(isTaqError(err) ? err.message : err)
@@ -99,7 +120,7 @@ function App(props: AppProps) {
       contractAddress={contractAddress ?? "No contract found"}
       contractStorage={contractStorage}
       setContractStorage={setContractStorage}
-      rpcUrl={getRpcUrl(deps) ?? 'No RPC url specified in environment configuration.'}
+      network={deps.network}
     />
   ) : (
     <div></div>
