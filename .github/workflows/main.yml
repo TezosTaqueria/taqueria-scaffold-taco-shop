@@ -30,3 +30,4 @@ jobs:
           deploy_contracts: hello-tacos.tz
           sandbox_name: local
           test_plugin: jest
+          environment: development
