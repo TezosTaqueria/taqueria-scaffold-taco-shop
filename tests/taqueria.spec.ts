@@ -23,7 +23,7 @@ describe('E2E Testing for taqueria action', () => {
     test('Verify that taqueria can originate a contract to the local sandbox', async () => {
         const contractName = 'hello-tacos.tz'
 
-		const contractOriginate = await execPromise(`taq originate ${contractName}`, { cwd: `./` });
+		const contractOriginate = await execPromise(`taq originate ${contractName} --env development`, { cwd: `./` });
         expect(contractOriginate.stdout).toContain(contractName);
 		expect(contractOriginate.stdout).toContain('local');
 
