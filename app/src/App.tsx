@@ -9,18 +9,14 @@ import "./styles/Interface.css";
 import "./styles/Footer.css";
 import "./styles/Wallet.css";
 import { getAliasAddress } from "@taqueria/toolkit";
-import config from "./config.json";
+import Config from "./config.json";
 import type {Storage} from "./model"
 
 function App() {
-
   // Retrieve the most recent address of the deployed contract
-
   const [rpcUrl] = useState("https://ghostnet.ecadinfra.com");
   const [contractAddress] = useState(
-    // "KT18izS1s5Hsv9tRaB8VjxdTU6MFpLviLCrS"
-    // config.environment.development.aliases["hello-tacos"].address
-    getAliasAddress(config, "hello-tacos")
+    getAliasAddress(Config, "hello-tacos")
   );
   const [contractStorage, setContractStorage] = useState<Storage | undefined>(
     undefined
