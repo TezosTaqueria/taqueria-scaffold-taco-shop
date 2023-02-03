@@ -35,12 +35,11 @@
             }
         }
     },
-    "environmentDefault": "testing",
+    "environmentDefault": "development",
     "environments": {
         "development": {
             "type": "flextesa",
-            "label": "Local Tezos Sandbox",
-	    "rpcUrl": "http://localhost:20000"
+            "label": "Local Tezos Sandbox"
         },
         "testing": {
             "type": "simple",
@@ -51,15 +50,7 @@
                     "address": "KT1VABCpYdHwVt4KQyadfLpNsJtpqzCgFvqJ"
                 }
             },
-            "networkName": "ghostnet",
-            "accounts": {
-                "taqOperatorAccount": {
-                    "publicKey": "edpku75M92YKUfnXtgXAp15ToHATPWhqotdKLEcgjVDsWWor8ZMjge",
-                    "publicKeyHash": "tz1RENwgnqPSpYcP7qCjUdEQYN4JdgdnAERt",
-                    "privateKey": "edskRzxEMufesxjThqjXkRC5jtwQrJkyPhMt7sCc2MwPhftZLk9XjButF5nN8cVVtUdW4fFBDRsBJG2C6qm3AePieBt4SAxmpk",
-                    "mnemonic": "cake noble burger super confirm wasp ahead doll barrel museum endless hello"
-                }
-            }
+            "networkName": "ghostnet"
         },
         "production": {
             "type": "simple",

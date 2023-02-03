@@ -6,7 +6,7 @@ import "./styles/Header.css";
 import "./styles/Interface.css";
 import "./styles/Footer.css";
 import "./styles/Wallet.css";
-import { V2, getConfigV2, ConfigFileSetV2, isTaqError, TaqError, Config} from "@taqueria/toolkit";
+import { V2, getConfigV2, ConfigFileSetV2, isTaqError, TaqError} from "@taqueria/toolkit";
 import type {Storage} from "./model"
 import AppContainer from "./components/AppContainer"
 
@@ -15,8 +15,6 @@ const CONTRACT_NAME='hello-tacos'
 type AppProps = {
   env: Record<string, string|undefined>
 }
-
-type Environment = ReturnType<typeof V2.getCurrentEnv>
 
 type Deps = {
   settings: ConfigFileSetV2,
@@ -28,14 +26,6 @@ function getContractAddress(contractName: string, deps: Deps) {
   if (deps.settings) {
     const env = V2.getCurrentEnv(deps.settings)
     return V2.getContractAddress(contractName, env)
-  }
-  return undefined
-}
-
-function getRpcUrl(deps: Deps) {
-  if (deps.settings) {
-    const env = V2.getCurrentEnv(deps.settings)
-    return env['rpcUrl'] as string | undefined
   }
   return undefined
 }

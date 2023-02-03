@@ -31,16 +31,9 @@ The project comes pre-configured with the following:
 
 - Plugins: LIGO, Flextesa, Taquito, Jest
 - A LIGO multi-file smart contract: `hello-tacos.mligo`, `_buy.mligo`, `_make.mligo`, `_schema.mligo`
-- A network configuration for the Ghostnet testnet
-- An environment named `ghostnet` with faucet to fund operations on the testnet
+- A default environment named `development`, configured to target a local flextesa sandbox
+- An environment named `testing`, configured to target the Ghostnet testnet
 - Native Taqueria testing (Taqueria Jest plugin)
-
-***Coming soon***
-
-- Passing the deployed contract address to the React dApp via the State API
-- Deploying the contract using Taqueria operations
-- Targeting a specific network for contract deployment and testing (sandboxes and testnets)
-- Deploying the contract to mainnet
 
 ## Requirements
 
@@ -56,8 +49,8 @@ The project comes pre-configured with the following:
 The intended workflow for this project is as follows:
 
 1. Compile the LIGO multi-file source code
-2. Originate the smart contract to the testnet
-3. Insert the returned contract address into the React dApp
+2. Originate the smart contract to the flextesa sandbox
+3. Configure an instantiated account from your flextesa sandbox in your Wallet application, such as (Temple Wallet)[https://templewallet.com/].
 4. Build and start the React dApp
 5. Connect to Temple wallet
 6. Buy tacos!
@@ -162,12 +155,19 @@ taq compile hello-tacos.mligo
 
 This will compile multi-file contract `hello-tacos.mligo` to a file, `artifacts/hello-tacos.tz`
 
-### Originate to the Testnet
+### Start the sandbox
 
-Run the following command to originate the contract to the ghostnet environment:
+We'll need a running flextesa sandbox to deploy our contract to. To start, execute the following:
+```shell
+taq start sandbox
+```
+
+### Originate to the Sandbox
+
+Run the following command to originate the contract to the development environment, which is configured to use a flextesa sandbox:
 
 ```shell
-taq originate hello-tacos.tz -e testing
+taq originate hello-tacos.tz
 ```
 
 This should return the address of the contract on the testnet which looks like this:
@@ -176,11 +176,9 @@ This should return the address of the contract on the testnet which looks like t
 ┌────────────────┬──────────────────────────────────────┬────────────────┐────────────────┐
 │ Contract       │ Address                              │ Alias          │ Destination    │
 ├────────────────┼──────────────────────────────────────┼────────────────┤────────────────┤
-│ hello-tacos.tz │ KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE │ hello-tacos    │ ghostnet       │
+│ hello-tacos.tz │ KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE │ hello-tacos    │ development    │
 └────────────────┴──────────────────────────────────────┴────────────────┘────────────────┘
 ```
-
-:warning: This scaffold comes with pre-configured faucet information for the testnet which is shared by all users and can cause issues. It is recommended that you replace the faucet info in the project's `config.json` file with your own whose setup instructions can be found [here](/docs/config/networks/#faucets). You can also get Tez for ghostnet from the [Teztnets Faucet](https://teztnets.xyz/).
 
 ### React Dapp
 
@@ -188,56 +186,54 @@ The React dApp retrieves the number of available tacos from the smart contract a
 
 ![Hello Tacos Screenshot](/hello-tacos-screenshot.png)
 
-:warning: In order for the React dApp to connect to the smart contract, the contract must be deployed to the testnet and the returned address of the contract must be added to the `/app/index.tsx` file. The scaffold comes pre-configured with the address of the deployed contract for demonstration purposes but it is recommended that you add your own faucet file, then re-deploy the contract and update the references to it in the project for your own use. This will be fixed in the future when contract addresses will be passed via the State API dynamically
-
-### Insert the Contract Address
-
-There is a way to point the dApp to a hardcoded contract.
-To do so you need to insert the address of the contract into the `/app/src/App.tsx` file. Copy the address returned from the command above and paste it into the `contractAddress` variable in the `/app/src/App.tsx` file as shown here:
-
-```ts /app/src/App.tsx
-function App() {
-
-  // Retrieve the most recent address of the deployed contract
-
-  const [rpcUrl] = useState("https://ghostnet.ecadinfra.com");
-  const [contractAddress] = useState(
-    "KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE"
-  );
-  const [contractStorage, setContractStorage] = useState<Storage | undefined>(
-    undefined
-  );
-  const [Tezos] = useState<TezosToolkit>(new TezosToolkit(rpcUrl));
-  const [connected, setConnected] = useState(false);
-```
-
 ### Build and Start the React Dapp
 
-Now that the contract has been deployed and the address added to the dApp, you can build and start the React dApp
-
-Change into the `/app` directory:
-
+Now that the contract has been deployed, you can build and start the React dApp:
 ```shell
-cd app
-```
-
-Build the React dApp:
-
-```shell
-npm run build
-```
-
-Start and serve the dApp:
-
-```shell 
-npm run start
+npm run start:app
 ```
 
 You should now be able to access the Taco Shop dApp at [http://localhost:3000](http://localhost:3000/)
 
 ### Hot Reload Contract Address 
 
-By default, page refresh updates the page UI to point to the address of the new deployment.
+If at any time you re-deploy your smart contract, or change the default environment, you'll need to restart the app.
+
+### Add a sandbox account to your Temple Wallet
+
+Open your `.taq/config.local.development.json` file, and find the account keys for the user "Bob":
+
+```json
+ "bob": {
+            "encryptedKey": "edpkurPsQ8eUApnLUJ9ZPDvu98E8VNj4KtJa1aZr16Cr5ow5VHKnz4",
+            "publicKeyHash": "tz1aSkwEot3L2kmUvcoxzjMomb9mvBNuzFK6",
+            "secretKey": "unencrypted:edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt"
+        }
+```
+
+Copy the _secretKey_ of bob, which from the example above, would be: `edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt`.
+
+> NOTE: For all Taqueria projects, when you start a sandbox, "Bob" will always have the above key values.
+
+Open your Temple Setting and login.
+
+Click on your Avatar icon in the top-right corner. A menu should appear. Select _Import Account_.
+
+Paste Bob's secret key (`edsk3RFfvaFaxbHx8BMtEW1rKQcPtDML3LXjNqMNLCzC3wLC1bWbAt`) into the text area and click _Import Account_.
+
+Take note of the account name, which should be `Account X`, where X corresponds to number assigned to the account. The largest number would correspond to the last added account.
+
+### Add the Sandbox Network to Temple Wallet
+
+Open your Temple Setting and login.
+
+Click on your Avatar icon in the top-right corner. A menu should appear. Select _Settings_ and then _Networks_.
+
+At the bottom of the window is a section called _Add Network_ with two fields, _Name_ and _RBC base URL_.
+
+Enter *development* into the _Name_ field and *http://localhost:20000* into the _RBC base URL_ field. Then click _Add Network_.
+
+Beside your Avatar in Temple Wallet is a drop-down of networks, with the current network probably set to "Tezos Mainnet". From the drop-down, select the "development" network to just added to connect to your flextesa sandbox.
 
 ### Connect to Temple Wallet
 
@@ -275,5 +271,6 @@ taq start sandbox local
 Then, run the Jest tests in the `tests` directory with the following command:
 
 ```shell
-taq test
+npm run test:integration
 ```
+> Coming soon: We will be adjusting this scaffold to use our jest plugin at a later time.

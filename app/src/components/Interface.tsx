@@ -99,7 +99,7 @@ const Interface = ({
               ? `${orderingTacos ? "Ordering" : "Order"} ${tacosToOrder} taco${
                   tacosToOrder > 1 ? "s" : ""
                 }`
-              : "No tacos"}
+              : "Order " + tacosToOrder + " Tacos"}
           </button>
           <br />
           {orderingTacos && (
