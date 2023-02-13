@@ -75,6 +75,10 @@
         {
             "type": "npm",
             "name": "@taqueria/plugin-jest"
+        },
+	{
+            "type": "npm",
+            "name": "@taqueria/plugin-smartpy"
         }
     ]
 }

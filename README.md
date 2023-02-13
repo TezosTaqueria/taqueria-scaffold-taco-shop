@@ -29,8 +29,8 @@ The smart contract has been deployed to ghostnet at the address for demonstratio
 
 The project comes pre-configured with the following:
 
-- Plugins: LIGO, Flextesa, Taquito, Jest
-- A LIGO multi-file smart contract: `hello-tacos.mligo`, `_buy.mligo`, `_make.mligo`, `_schema.mligo`
+- Plugins: LIGO, SmartPy, Flextesa, Taquito, Jest
+- A LIGO multi-file smart contract: `hello-tacos.mligo`, `_buy.mligo`, `_make.mligo`, `_schema.mligo`. Note, the same contract is also available in SmartPy in a file called `hello-tacos.py`.
 - A default environment named `development`, configured to target a local flextesa sandbox
 - An environment named `testing`, configured to target the Ghostnet testnet
 - Native Taqueria testing (Taqueria Jest plugin)
