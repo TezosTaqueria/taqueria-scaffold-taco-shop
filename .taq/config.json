@@ -40,7 +40,10 @@
         "development": {
             "type": "flextesa",
             "label": "Local Tezos Sandbox",
-            "rpcUrl": "http://localhost:20000"
+            "rpcUrl": "http://localhost:20000",
+	    "annotations": {
+		"block_time": 1
+    	    }
         },
         "testing": {
             "type": "simple",
