@@ -18,7 +18,7 @@ class HelloTacos(sp.Contract):
         sp.if self.data.admin != sp.sender:
             sp.failwith("NOT_ALLOWED_TO_MAKE_TACOS")
         sp.else:
-        self.data.available_tacos += tacos_to_make
+            self.data.available_tacos += tacos_to_make
 
 admin = sp.test_account("Administrator")
 user = sp.test_account("User")
