@@ -37,9 +37,9 @@ The project comes pre-configured with the following:
 
 ## Requirements
 
-- Taqueria v0.16.0 or later
+- Taqueria v0.42.0 or later
 - Docker v0.9 or later
-- Node.js v16 or later
+- Node.js v18 or later
 - Temple Wallet (can be found [here](https://templewallet.com/))
 - A funded testnet account (instructions [here](https://taqueria.io/docs/config/networks/#faucets))
 
