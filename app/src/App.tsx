@@ -53,6 +53,7 @@ function getNetworkInfo(settings: ConfigFileSetV2): Network {
 }
 
 function App(props: AppProps) {
+
   const [deps, setDeps] = useState<Deps|undefined>(undefined)
   const contractAddress = deps ? getContractAddress(CONTRACT_NAME, deps) : undefined
   const [contractStorage, setContractStorage] = useState<Storage | undefined>(
@@ -66,7 +67,7 @@ function App(props: AppProps) {
     (async () => {
       if (!deps) {
         try {
-          const settings = await getConfigV2(props.env, 'REACT_APP_')
+          const settings = await getConfigV2(props.env, 'VITE_')
           const network = getNetworkInfo(settings)
           const Tezos = new TezosToolkit(network.rpcUrl!)
           setDeps({

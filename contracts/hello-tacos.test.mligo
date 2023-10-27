@@ -24,8 +24,7 @@
   Please see the top-level README file for more information.
 *)
 
-#include "./_schema.mligo"
-#include "./hello-tacos.mligo"
+#import "hello-tacos.mligo" "Contract"
 
 let _print_header = Test.println("Testing hello-taco.mligo....")
 

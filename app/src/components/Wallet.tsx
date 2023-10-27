@@ -6,7 +6,8 @@ import { Network } from "@airgap/beacon-sdk";
 const createWallet = (network: Network): BeaconWallet => {
   const walletOptions = {
     name: "Hello Tacos",
-    preferredNetwork: network.type
+    preferredNetwork: network.type,
+    network
   }
   return new BeaconWallet(walletOptions);
 };
@@ -31,7 +32,7 @@ const Wallet = ({
 
     if (Tezos) {
       try {
-        await w.requestPermissions({network});
+        await w.requestPermissions();
         const userPkh = await w.getPKH();
         setUserAddress(userPkh);
         Tezos.setWalletProvider(wallet);

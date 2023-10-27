@@ -5,16 +5,18 @@
   "license": "ISC",
   "dependencies": {
     "@airgap/beacon-sdk": "^4.0.12",
-    "@taqueria/toolkit": "file:../../taqueria/taqueria-toolkit",
-    "@taquito/beacon-wallet": "^17.3.2",
-    "@taquito/taquito": "^17.3.2",
+    "@taqueria/protocol": "^0.43.1",
+    "@taqueria/toolkit": "^0.43.3",
+    "@taquito/beacon-wallet": "^18.0.0-RC.0",
+    "@taquito/taquito": "^18.0.0-RC.0",
+    "buffer": "^6.0.3",
     "events": "^3.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "vite-compatible-readable-stream": "^3.6.1"
   },
   "scripts": {
-    "start": "withTaq --projectDir ../ --prefix VITE_  vite",
+    "start": "withTaq --projectDir ../ --prefix VITE_ vite",
     "build": "tsc && withTaq --projectDir ../ --prefix VITE_ vite build",
     "test": "jest"
   },

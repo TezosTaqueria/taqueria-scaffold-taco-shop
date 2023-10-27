@@ -24,18 +24,15 @@ const Interface = ({
     if (
       contractStorage &&
       tacosToOrder > 0 &&
-      tacosToOrder < contractStorage.available_tacos.toNumber() &&
+      tacosToOrder < contractStorage.toNumber() &&
       !insufficientTacos
     ) {
       try {
         setOrderingTacos(true);
         const contract = await Tezos.wallet.at(contractAddress);
-        const op = await contract.methods.buy(tacosToOrder).send();
+        const op = await contract.methods.default(tacosToOrder).send();
         await op.confirmation();
-        setContractStorage({
-          ...contractStorage,
-          available_tacos: contractStorage.available_tacos.minus(tacosToOrder)
-        });
+        setContractStorage(contractStorage.minus(tacosToOrder));
         setTacosToOrder(0);
       } catch (error) {
         console.error(error);
@@ -53,7 +50,7 @@ const Interface = ({
         <>
           <div className="amount-of-tacos">
             <div>There are</div>
-            <div className="amount-of-tacos__storage">{contractStorage.available_tacos.toNumber()}</div>
+            <div className="amount-of-tacos__storage">{contractStorage.toNumber()}</div>
             <div>tacos in the Taqueria</div>
           </div>
           <br />
@@ -67,7 +64,7 @@ const Interface = ({
               onChange={ev => {
                 const val = Math.floor(+ev.target.value);
                 setTacosToOrder(val);
-                if (val <= contractStorage.available_tacos.toNumber()) {
+                if (val <= contractStorage.toNumber()) {
                   setInsufficientTacos(false);
                 } else {
                   setInsufficientTacos(true);

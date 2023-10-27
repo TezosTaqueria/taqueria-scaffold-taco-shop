@@ -25,12 +25,10 @@ This scaffold implements a simple full stack Tezos project. It has a React dApp 
 
 The React dApp uses Beacon Wallet to interact with Tezos wallets in the browser and once connected, will display the number of `available_tacos` stored on-chain in the smart contract. There is also a basic interface which allows the user to buy tacos by sending a transaction to the smart contract with the `number_of_tacos_to_buy` as a parameter
 
-The smart contract has been deployed to ghostnet at the address for demonstration purposes: `KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE`
-
 The project comes pre-configured with the following:
 
 - Plugins: LIGO, SmartPy, Flextesa, Taquito, Jest
-- A LIGO multi-file smart contract: `hello-tacos.mligo`, `_buy.mligo`, `_make.mligo`, `_schema.mligo`. Note, the same contract is also available in SmartPy in a file called `hello-tacos.py`.
+- A LIGO smart contract: `hello-tacos.mligo`.
 - A default environment named `development`, configured to target a local flextesa sandbox
 - An environment named `testing`, configured to target the Ghostnet testnet
 - Native Taqueria testing (Taqueria Jest plugin)
@@ -85,67 +83,7 @@ cd taco-shop
 
 ### Smart Contract
 
-The smart contract `hello-tacos.mligo` is simple and straightforward. It stores the number of `available_tacos` in the contract storage, and provides an entrypoint that accepts a `tacos_to_buy` parameter which will decrease the number of available_tacos by the number of tacos_to_buy
-
-1. `hello-tacos.mligo` file itself:
-```js
-#include "_buy.mligo"
-#include "_make.mligo"
-
-let main ((action, store) : (parameter * storage)) =
-    match action with
-    | Buy qty -> buy(qty, store)
-    | Make qty -> make(qty, store)
-```
-
-2. `_buy.mligo`
-```js
-#include "_schema.mligo"
-
-let buy ((tacos_to_buy, store) : (taco_quantity * storage)) =
-    if tacos_to_buy > store.available_tacos
-    then (failwith "NOT_ENOUGH_TACOS": operation list * storage)
-    else (([], {store with available_tacos = abs(store.available_tacos - tacos_to_buy)}) :
-        operation list * storage)
-```
-
-3. `_make.mligo`
-```js
-#include "_schema.mligo"
-
-let make ((tacos_to_make, store) : (taco_quantity * storage)) =
-    if not (Tezos.get_sender () = store.admin)
-    then (failwith "NOT_ALLOWED": operation list * storage)
-    else (([], {store with available_tacos = store.available_tacos + tacos_to_make}) : 
-        (operation list * storage))
-```
-
-4. `_schema.mligo`
-```js
-type taco_quantity = nat
-type admin = address
-
-type storage = {
-    available_tacos: taco_quantity;
-    admin: admin
-}
-
-type parameter =
-| Buy of taco_quantity
-| Make of taco_quantity
-```
-
-5. `hello-tacos.storageList.mligo`
-```js
-#include "hello-tacos.mligo"
-// All storage values must be in this file
-
-// Define a storage variable
-let storage: storage = {
-    available_tacos = 42n;
-    admin = ("tz1ge3zb6kC5iUZcXsjxiwwtU5MwP37T6m1z" : address)
-}
-```
+The smart contract `hello-tacos.mligo` is simple and straightforward. It stores the number of `available_tacos` in the contract storage, and provides an entrypoint that accepts a `tacos_to_buy` parameter which will decrease the number of available_tacos by the number of tacos_to_buy.
 
 ### Compile the Contract
 
@@ -173,11 +111,11 @@ taq originate hello-tacos.tz
 This should return the address of the contract on the testnet which looks like this:
 
 ```shell
-┌────────────────┬──────────────────────────────────────┬────────────────┐────────────────┐
-│ Contract       │ Address                              │ Alias          │ Destination    │
-├────────────────┼──────────────────────────────────────┼────────────────┤────────────────┤
-│ hello-tacos.tz │ KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE │ hello-tacos    │ development    │
-└────────────────┴──────────────────────────────────────┴────────────────┘────────────────┘
+┌────────────────┬──────────────────────────────────────┬────────────────┐
+│ Contract       │ Address                              │ Alias          │
+├────────────────┼──────────────────────────────────────┼────────────────┤
+│ hello-tacos.tz │ KT1KBBk3PXkKmGZn3K6FkktqyPRpEbzJoEPE │ hello-tacos    │
+└────────────────┴──────────────────────────────────────┴────────────────┘
 ```
 
 ### React Dapp
