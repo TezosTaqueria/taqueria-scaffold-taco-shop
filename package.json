@@ -35,7 +35,7 @@
     "@jest/console": "^29.4.1",
     "@taqueria/plugin-contract-types": "^0.43.3",
     "@taqueria/plugin-core": "^0.43.3",
-    "@taqueria/plugin-flextesa": "file:../taqueria/taqueria-plugin-flextesa",
+    "@taqueria/plugin-flextesa": "0.44.0",
     "@taqueria/plugin-jest": "^0.43.3",
     "@taqueria/plugin-ligo": "^0.43.3",
     "@taqueria/plugin-smartpy": "^0.43.3",
