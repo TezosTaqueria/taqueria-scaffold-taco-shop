@@ -9,7 +9,7 @@
     "start:app": "cd app && npm run start",
     "start:sandbox": "taq start sandbox",
     "start": "npm run compile:contract && npm run start:sandbox && npm run start:app",
-    "compile:contract": "taq compile hello-tacos.mligo",
+    "compile:contract": "taq compile -p ligo hello-tacos.mligo",
     "df-docker": "docker system df",
     "rm-docker": "docker rm -vf $(docker ps -aq) 2>&1 > /dev/null",
     "test:unit": "taq test hello-tacos.test.mligo --plugin @taqueria/plugin-ligo",
