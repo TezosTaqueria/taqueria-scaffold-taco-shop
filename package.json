@@ -19,15 +19,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ecadlabs/taqueria-scaffold-taco-shop.git"
+    "url": "git+https://github.com/TezosTaqueria/taqueria-scaffold-taco-shop.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Trilitech",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop/issues"
+    "url": "https://github.com/TezosTaqueria/taqueria-scaffold-taco-shop/issues"
   },
-  "homepage": "https://github.com/ecadlabs/taqueria-scaffold-taco-shop#readme",
+  "homepage": "https://github.com/TezosTaqueria/taqueria-scaffold-taco-shop#readme",
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.20.7",
     "@babel/plugin-transform-modules-commonjs": "^7.20.11",
