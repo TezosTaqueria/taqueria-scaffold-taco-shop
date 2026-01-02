@@ -30,7 +30,7 @@ const Interface = ({
       try {
         setOrderingTacos(true);
         const contract = await Tezos.wallet.at(contractAddress);
-        const op = await contract.methods.default(tacosToOrder).send();
+        const op = await contract.methodsObject.default(tacosToOrder).send();
         await op.confirmation();
         setContractStorage(contractStorage.minus(tacosToOrder));
         setTacosToOrder(0);

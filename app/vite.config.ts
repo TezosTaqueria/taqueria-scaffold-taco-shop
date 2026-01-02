@@ -1,24 +1,37 @@
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import viteTsconfigPaths from 'vite-tsconfig-paths'
-import {Buffer} from 'buffer'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
-export default ({command}) => {
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export default defineConfig(({command}) => {
     const isBuild = command === 'build';
-    return     defineConfig({
+    return {
         // depending on your application, base can also be "/"
         base: '',
-        plugins: [react(), viteTsconfigPaths()],
-        server: {    
+        plugins: [
+            react(),
+            viteTsconfigPaths(),
+            nodePolyfills({
+                include: ['buffer', 'process', 'util', 'stream', 'events', 'http', 'https', 'crypto', 'fs', 'path', 'os', 'url'],
+                globals: {
+                    Buffer: true,
+                    global: true,
+                    process: true,
+                },
+            }),
+        ],
+        server: {
             // this ensures that the browser opens upon server start
             open: true,
-            // this sets a default port to 3000  
-            port: 3000, 
+            // this sets a default port to 3000
+            port: 3000,
         },
         define: {
             global: 'globalThis',
-            Buffer: Buffer,
         },
         build: {
             outDir: 'build',
@@ -31,7 +44,7 @@ export default ({command}) => {
         resolve: {
             alias: {
                 // dedupe @airgap/beacon-sdk
-                // I almost have no idea why it needs `cjs` on dev and `esm` on build, but this is how it works 🤷‍♂️
+                // I almost have no idea why it needs `cjs` on dev and `esm` on build, but this is how it works
                 '@airgap/beacon-sdk': path.resolve(__dirname, `./node_modules/@airgap/beacon-sdk/dist/${isBuild ? 'esm' : 'cjs'}/index.js`),
                 '@taqueria/toolkit': path.resolve(__dirname, './node_modules/@taqueria/toolkit/index.js'),
                 '@taqueria/node-sdk': path.resolve(__dirname, './node_modules/@taqueria/node-sdk/index.mjs'),
@@ -40,6 +53,6 @@ export default ({command}) => {
                 stream: 'vite-compatible-readable-stream'
             },
         },
-    })
-}
+    }
+})
 
