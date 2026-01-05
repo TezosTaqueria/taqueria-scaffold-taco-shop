@@ -1,5 +1,5 @@
 (*
-  These are Unit Tests for the hello-taco Smart Contract. They use the CameLIGO Test
+  These are Unit Tests for the hello-taco Smart Contract. They use the CameLIGO Test.Next
   library. For more information: https://ligolang.org/docs/reference/test?lang=cameligo
 
   To run these tests, invoke:
@@ -24,83 +24,55 @@
   Please see the top-level README file for more information.
 *)
 
-#import "hello-tacos.mligo" "Contract"
+#import "hello-tacos.mligo" "HelloTacos"
+module Test = Test.Next
 
-let _print_header = Test.println("Testing hello-taco.mligo....")
-
-let _arrange = Test.reset_state 3n []
-let admin = Test.nth_bootstrap_account 1
-let user = Test.nth_bootstrap_account 2
+let _print_header = Test.IO.println "Testing hello-tacos.mligo...."
 
 let available_tacos: nat = 50n
 
-let initial_storage = {
-    available_tacos = available_tacos;
-    admin = admin;
-}
-
-let contract_at(address) = Test.to_contract address
-let storage_at(address) = Test.get_storage address
-
+(* Test that the contract initializes with the correct storage *)
 let test_initial_contract_state =
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    let storage = storage_at addr in
-    assert (storage.available_tacos = available_tacos && storage.admin = admin)
+    let contract = Test.Originate.contract (contract_of HelloTacos) available_tacos 0tez in
+    let storage = Test.Typed_address.get_storage contract.taddr in
+    Assert.assert (storage = available_tacos)
 
+(* Test that we can buy some tacos and storage updates correctly *)
+let test_can_buy_some_tacos =
+    let contract = Test.Originate.contract (contract_of HelloTacos) available_tacos 0tez in
+    let tacos_to_buy = 10n in
+    let _ = Test.Contract.transfer_exn (Test.Typed_address.get_entrypoint "default" contract.taddr) tacos_to_buy 0tez in
+    let storage = Test.Typed_address.get_storage contract.taddr in
+    Assert.assert (storage = abs(available_tacos - tacos_to_buy))
+
+(* Test that we can buy all remaining tacos *)
+let test_can_buy_all_tacos =
+    let contract = Test.Originate.contract (contract_of HelloTacos) available_tacos 0tez in
+    let _ = Test.Contract.transfer_exn (Test.Typed_address.get_entrypoint "default" contract.taddr) available_tacos 0tez in
+    let storage = Test.Typed_address.get_storage contract.taddr in
+    Assert.assert (storage = 0n)
+
+(* Test that buying more tacos than available fails with NOT_ENOUGH_TACOS *)
 let test_cannot_buy_more_tacos_than_available =
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    let storage = storage_at addr in
-    let too_many_tacos = storage.available_tacos + 1n in
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    match Test.transfer_to_contract (contract_at addr) (Buy too_many_tacos) 0mutez with
-        | Fail (Rejected(msg,_good)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
-        | Success _bad -> Test.failwith("Failed to prevent purchasing too many tacos")
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
+    let contract = Test.Originate.contract (contract_of HelloTacos) available_tacos 0tez in
+    let too_many_tacos = available_tacos + 1n in
+    let result = Test.Contract.transfer (Test.Typed_address.get_entrypoint "default" contract.taddr) too_many_tacos 0tez in
+    match result with
+        | Fail (Rejected (msg, _good)) -> Assert.assert (msg = Test.Michelson.eval "NOT_ENOUGH_TACOS")
+        | Success _bad -> Test.Assert.failwith "Failed to prevent purchasing too many tacos"
+        | Fail _ -> Test.Assert.failwith "Unexpected failure type"
 
-let test_can_buy_some_number_tacos =
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    let storage = storage_at addr in
-    let tacos_to_buy = storage.available_tacos / 2n in
-    match Test.transfer_to_contract (contract_at addr) (Buy tacos_to_buy) 0mutez with
-        | Success _good -> true
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
-
-let test_can_buy_all_remaining_tacos =
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    let storage = storage_at addr in
-    let number_of_available_tacos = storage.available_tacos in
-    let _ensure_nonzero_tacos_available = assert (number_of_available_tacos > 0n) in
-    match Test.transfer_to_contract (contract_at addr) (Buy number_of_available_tacos) 0mutez with
-        | Success _good -> true
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
-
+(* Test that buying when no tacos are available fails *)
 let test_no_tacos_available =
-    let no_tacos_available = { initial_storage with available_tacos = 0n } in
-    let addr,_,_ = Test.originate main no_tacos_available 0tez in
-    let storage = storage_at addr in
-    let _verify_no_tacos_available = assert (storage.available_tacos = 0n) in
-    match Test.transfer_to_contract (contract_at addr) (Buy 1n) 0mutez with
-        | Fail (Rejected(msg,_good)) -> msg = Test.eval "NOT_ENOUGH_TACOS"
-        | Success _bad -> Test.failwith("Failed to prevent a purchase of 0 tacos")
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
+    let no_tacos: nat = 0n in
+    let contract = Test.Originate.contract (contract_of HelloTacos) no_tacos 0tez in
+    let result = Test.Contract.transfer (Test.Typed_address.get_entrypoint "default" contract.taddr) 1n 0tez in
+    match result with
+        | Fail (Rejected (msg, _good)) -> Assert.assert (msg = Test.Michelson.eval "NOT_ENOUGH_TACOS")
+        | Success _bad -> Test.Assert.failwith "Failed to prevent purchasing when no tacos available"
+        | Fail _ -> Test.Assert.failwith "Unexpected failure type"
 
-let test_only_admin_can_make_tacos =
-    let _ = Test.set_source user in
-    let addr,_,_ = Test.originate main initial_storage 0tez in // N.B. originates as user
-    match Test.transfer_to_contract (contract_at addr) (Make available_tacos) 0mutez with
-        | Fail (Rejected(msg,_good)) -> msg = Test.eval "NOT_ALLOWED" // TODO Improve failure message
-        | Success _bad -> Test.failwith("Failed to prevent a user from making tacos")
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
-
-let test_can_make_tacos =
-    let _ = Test.set_source admin in // Strictly, unnecessary: just being explicit
-    let addr,_,_ = Test.originate main initial_storage 0tez in
-    let storage = storage_at addr in
-    let _ = assert (storage.available_tacos = available_tacos) in
-    match Test.transfer_to_contract (contract_at addr) (Make 42n) 0mutez with
-        | Success _ ->
-            let updated_storage = storage_at addr in // Refresh after Make()
-            assert(updated_storage.available_tacos = available_tacos + 42n)
-        | Fail unexpected -> Test.failwith("Unexpected failure: ", unexpected)
-
-// TODO test re-entrancy
+(* Test direct function call without contract origination *)
+let test_main_function_directly =
+    let result = HelloTacos.main 10n 50n in
+    Assert.assert (result.1 = 40n)
