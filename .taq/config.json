@@ -47,14 +47,14 @@
         },
         "testing": {
             "type": "simple",
-            "label": "ghostnet",
-            "rpcUrl": "https://ghostnet.ecadinfra.com",
+            "label": "shadownet",
+            "rpcUrl": "https://rpc.shadownet.teztnets.com",
+            "networkName": "shadownet",
             "contracts": {
                 "hello-tacos": {
-                    "address": "KT1VABCpYdHwVt4KQyadfLpNsJtpqzCgFvqJ"
+                    "address": "KT1V5DkCCEMrdiA8w1S8WCDP6VqhFn6fZts3"
                 }
-            },
-            "networkName": "ghostnet"
+            }
         },
         "production": {
             "type": "simple",
