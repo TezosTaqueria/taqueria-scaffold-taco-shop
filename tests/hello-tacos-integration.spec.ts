@@ -1,7 +1,7 @@
 /*
   The integration tests in this module can be run as follows:
 
-  * Start the Flextesa sandbox with `taq start sandbox development`
+  * Start the Tezbox sandbox with `taq start sandbox development`
   * Compile the contract with `taq compile hello-tacos.mligo`
   * Start the sandbox: `taq start sandbox -e development`
   * Originate (deploy) the contract with `taq originate hello-tacos.tz -e development --sender alice`
@@ -25,7 +25,7 @@
 
   In order to ensure that we always have funds in the originating/admin account, we use Taqueria's
   facility to dynamically create, instantiate and fund accounts in a given environment. To this end,
-  the accounts are provisioned and funded in the local Flextesa sandbox on startup. This ensures that
+  the accounts are provisioned and funded in the local Tezbox sandbox on startup. This ensures that
   a representative set of tests work first time, to provide a decent basis for extension.
 
   Please see the top-level README file for more information.
@@ -52,13 +52,13 @@ const getTaqueriaConfig = async () => {
     const config = await getConfigV2(env)
     const devEnv = V2.getEnv("development", config)
     const alice_sk = String(path('accounts.alice.secretKey', devEnv)).replace('unencrypted:', '')
-    const flextesa_uri = devEnv['rpcUrl'] as string
-    const Tezos = new TezosToolkit(flextesa_uri)
+    const sandbox_uri = devEnv['rpcUrl'] as string
+    const Tezos = new TezosToolkit(sandbox_uri)
     const admin_signer = new InMemorySigner(alice_sk);
     Tezos.setSignerProvider(admin_signer);
 
     return {
-        flextesa_uri,
+        sandbox_uri,
         alice: String(path('accounts.alice.publicKeyHash', devEnv)),
         alice_sk: alice_sk,
         joe: String(path('accounts.joe.publicKeyHash', devEnv)),
@@ -202,16 +202,16 @@ describe('Taqueria integration tests', () => {
 
     // A lower-level way to interact with a Wallet
     test('Get balance via RpcClient', async () => {
-        const {flextesa_uri, alice} = await getTaqueriaConfig()
-        const client = new RpcClient(flextesa_uri);
+        const {sandbox_uri, alice} = await getTaqueriaConfig()
+        const client = new RpcClient(sandbox_uri);
         const balance = await client.getBalance(alice);
         expect(await balance.toNumber()).toBeGreaterThan(0)
     });
 
     // A lower-level way of interacting with a Contract
     test('Get storage via RpcClient', async () => {
-        const {flextesa_uri, hello_tacos} = await getTaqueriaConfig()
-        const client = new RpcClient(flextesa_uri);
+        const {sandbox_uri, hello_tacos} = await getTaqueriaConfig()
+        const client = new RpcClient(sandbox_uri);
         const storage = await client.getStorage(hello_tacos);
         expect(storage).toHaveProperty('prim')
     });

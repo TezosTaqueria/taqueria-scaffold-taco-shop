@@ -35,7 +35,7 @@ function getNetworkInfo(settings: ConfigFileSetV2): Network {
   if (!settings.config.environmentDefault) throw new TaqError("No default environment set. Please set `environmentDefault` in your .taq/config.json file.")
   if (!env['rpcUrl']) throw new TaqError(`No RPC Url set for the environment called ${settings.config.environmentDefault}`)
   const rpcUrl = env['rpcUrl'] as string
-  if (env.type === 'flextesa') {
+  if (env.type === 'tezbox' || env.type === 'flextesa') {
     return {
       type: NetworkType.CUSTOM,
       name: settings.config.environmentDefault,
@@ -49,7 +49,7 @@ function getNetworkInfo(settings: ConfigFileSetV2): Network {
         rpcUrl
     }
   }
-  throw new TaqError('This app only supports environments of type "flextesa" or "simple".')
+  throw new TaqError('This app only supports environments of type "tezbox", "flextesa", or "simple".')
 }
 
 function App(props: AppProps) {

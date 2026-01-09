@@ -4,7 +4,7 @@
 |--------------------|---------------------------------------------------------|
 | Complexity         | Beginner                                                |
 | Automated Tests    | Yes                                                     |
-| Installed Plugins  | LIGO, Taquito, Flextesa, Jest                           |
+| Installed Plugins  | LIGO, Taquito, Tezbox, Jest                             |
 | Frontend Dapp      | Yes                                                     |
 | Wallet Integration | Yes                                                     |
 | Repository         | https://github.com/ecadlabs/taqueria-scaffold-taco-shop |
@@ -27,9 +27,9 @@ The React dApp uses Beacon Wallet to interact with Tezos wallets in the browser 
 
 The project comes pre-configured with the following:
 
-- Plugins: LIGO, SmartPy, Flextesa, Taquito, Jest
+- Plugins: LIGO, SmartPy, Tezbox, Taquito, Jest
 - A LIGO smart contract: `hello-tacos.mligo`.
-- A default environment named `development`, configured to target a local flextesa sandbox
+- A default environment named `development`, configured to target a local Tezbox sandbox
 - An environment named `testing`, configured to target the Ghostnet testnet
 - Native Taqueria testing (Taqueria Jest plugin)
 
@@ -47,8 +47,8 @@ The project comes pre-configured with the following:
 The intended workflow for this project is as follows:
 
 1. Compile the LIGO multi-file source code
-2. Originate the smart contract to the flextesa sandbox
-3. Configure an instantiated account from your flextesa sandbox in your Wallet application, such as (Temple Wallet)[https://templewallet.com/].
+2. Originate the smart contract to the Tezbox sandbox
+3. Configure an instantiated account from your Tezbox sandbox in your Wallet application, such as (Temple Wallet)[https://templewallet.com/].
 4. Build and start the React dApp
 5. Connect to Temple wallet
 6. Buy tacos!
@@ -95,14 +95,14 @@ This will compile multi-file contract `hello-tacos.mligo` to a file, `artifacts/
 
 ### Start the sandbox
 
-We'll need a running flextesa sandbox to deploy our contract to. To start, execute the following:
+We'll need a running Tezbox sandbox to deploy our contract to. To start, execute the following:
 ```shell
 taq start sandbox
 ```
 
 ### Originate to the Sandbox
 
-Run the following command to originate the contract to the development environment, which is configured to use a flextesa sandbox:
+Run the following command to originate the contract to the development environment, which is configured to use a Tezbox sandbox:
 
 ```shell
 taq originate hello-tacos.tz
@@ -171,7 +171,7 @@ At the bottom of the window is a section called _Add Network_ with two fields, _
 
 Enter *development* into the _Name_ field and *http://localhost:20000* into the _RBC base URL_ field. Then click _Add Network_.
 
-Beside your Avatar in Temple Wallet is a drop-down of networks, with the current network probably set to "Tezos Mainnet". From the drop-down, select the "development" network to just added to connect to your flextesa sandbox.
+Beside your Avatar in Temple Wallet is a drop-down of networks, with the current network probably set to "Tezos Mainnet". From the drop-down, select the "development" network to just added to connect to your Tezbox sandbox.
 
 ### Connect to Temple Wallet
 
